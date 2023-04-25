@@ -7,7 +7,6 @@ using UnityEngine.AI;
 public class Mover : MonoBehaviour
 {
     private Transform m_TargetPos;
-    private Ray m_Ray;
     private NavMeshAgent m_Agent;
 
     // Start is called before the first frame update
@@ -27,9 +26,9 @@ public class Mover : MonoBehaviour
 
     private void MoveTo()
     {
-        m_Ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(m_Ray, out RaycastHit hit))
+        if (Physics.Raycast(ray, out RaycastHit hit))
         {
             m_Agent.destination = hit.point;
         }
