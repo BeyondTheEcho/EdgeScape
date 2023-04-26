@@ -7,22 +7,30 @@ namespace RPG.Combat
 {
     [RequireComponent(typeof(ActionScheduler))]
     [RequireComponent(typeof(Mover))]
+    [RequireComponent(typeof(Animator))]
     public class Fighter : MonoBehaviour, IAction
     {
         [SerializeField] private float m_WeaponRange = 2.0f;
+        [SerializeField] private float m_TimeBetweenAttacks = 1f;
 
-        Transform m_Target;
-        Mover m_Mover;
-        ActionScheduler m_Scheduler;
+
+        private float m_TimeSinceLastAttack;
+        private Transform m_Target;
+        private Mover m_Mover;
+        private ActionScheduler m_Scheduler;
+        private Animator m_Animator;
 
         void Start ()
         {
             m_Mover = GetComponent<Mover>();
             m_Scheduler = GetComponent<ActionScheduler>();
+            m_Animator = GetComponent<Animator>();
         }
 
         private void Update()
         {
+            m_TimeSinceLastAttack += Time.deltaTime;
+
             if (m_Target == null) return;
 
             if (!GetIsInRange())
@@ -32,7 +40,16 @@ namespace RPG.Combat
             else
             {
                 m_Mover.Cancel();
+                AttackBehaviour();
             }
+        }
+
+        private void AttackBehaviour()
+        {
+            if (m_TimeSinceLastAttack < m_TimeBetweenAttacks) return;
+
+            m_TimeSinceLastAttack = 0;
+            m_Animator.SetTrigger("attack");
         }
 
         private bool GetIsInRange()
@@ -50,6 +67,12 @@ namespace RPG.Combat
         public void Cancel()
         {
             m_Target = null;
+        }
+
+        //Animation Event - DON'T REMOVE
+        private void Hit()
+        {
+
         }
     }
 }
