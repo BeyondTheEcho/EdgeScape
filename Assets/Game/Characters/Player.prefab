@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 1302304302822969141}
   - component: {fileID: 8808690898876492198}
   - component: {fileID: 20774391448910479}
+  - component: {fileID: 20774391448910485}
   - component: {fileID: 8881290463275125567}
   - component: {fileID: 20774391448910480}
-  - component: {fileID: 20774391448910485}
+  - component: {fileID: 3160986002611689557}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -101,6 +102,26 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!95 &20774391448910485
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4517695660298269725}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: d288a0e4a2d923b46898986e979da643, type: 3}
+  m_Controller: {fileID: 9100000, guid: 51847623336d7f744b65994024b3bdb1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!114 &8881290463275125567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,26 +146,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46c1a0a471a69114c9f2cf8a07a0ee14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!95 &20774391448910485
-Animator:
-  serializedVersion: 5
+--- !u!114 &3160986002611689557
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4517695660298269725}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: d288a0e4a2d923b46898986e979da643, type: 3}
-  m_Controller: {fileID: 9100000, guid: 51847623336d7f744b65994024b3bdb1, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf49de794aec4364b86d06948fe71bfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3654537209762347061
 PrefabInstance:
   m_ObjectHideFlags: 0
