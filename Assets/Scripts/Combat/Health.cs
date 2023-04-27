@@ -34,11 +34,6 @@ namespace RPG.Combat
             m_Animator.SetTrigger("death");
         }
 
-        public bool CanAttack()
-        {
-            return !m_IsDead;
-        }
-
         public bool IsDead()
         {
             return m_IsDead;

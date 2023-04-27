@@ -35,11 +35,13 @@ namespace RPG.Control
             {
                 if (hit.transform.gameObject.TryGetComponent(out CombatTarget target))
                 {
-                    if (!target.m_Health.CanAttack()) continue;
+                    Fighter fighter = target.gameObject.GetComponent<Fighter>();
+
+                    if (!fighter.CanAttack(target.gameObject)) continue;
 
                     if (Input.GetMouseButtonDown(0))
                     {
-                        m_Fighter.Attack(target);                       
+                        m_Fighter.Attack(target.gameObject);                       
                     }
 
                     return true;

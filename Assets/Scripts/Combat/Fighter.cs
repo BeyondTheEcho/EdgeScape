@@ -16,7 +16,7 @@ namespace RPG.Combat
 
 
         private float m_TimeSinceLastAttack;
-        private CombatTarget m_Target;
+        private Health m_Target;
         private Mover m_Mover;
         private ActionScheduler m_Scheduler;
         private Animator m_Animator;
@@ -33,7 +33,7 @@ namespace RPG.Combat
             m_TimeSinceLastAttack += Time.deltaTime;
 
             if (m_Target == null) return;
-            if (m_Target.m_Health.IsDead()) return;
+            if (m_Target.IsDead()) return;
 
             if (!GetIsInRange())
             {
@@ -68,7 +68,7 @@ namespace RPG.Combat
         {
             if (m_Target == null) return;
 
-            m_Target.m_Health.TakeDamage(m_WeaponDamage);
+            m_Target.TakeDamage(m_WeaponDamage);
         }
 
         private bool GetIsInRange()
@@ -77,10 +77,18 @@ namespace RPG.Combat
             return isInRange;
         }
 
-        public void Attack(CombatTarget target)
+        public void Attack(GameObject target)
         {
             m_Scheduler.StartAction(this);
-            m_Target = target;
+            m_Target = target.GetComponent<Health>();
+        }
+
+        public bool CanAttack(GameObject combatTarget)
+        {
+            if (combatTarget == null) return false;
+
+            Health targetToTest = combatTarget.GetComponent<Health>();
+            return targetToTest != null && !targetToTest.IsDead();
         }
 
         public void Cancel()
