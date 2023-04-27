@@ -14,6 +14,7 @@ namespace RPG.Control
         [SerializeField] private PatrolPath m_PatrolPath = null;
         [SerializeField] private float m_WaypointTolerance = 1.0f;
         [SerializeField] private float m_DwellTime = 5.0f;
+        [SerializeField] [Range(0,1)] private float m_PatrolSpeedFraction = 0.2f;
 
 
         private GameObject m_Player;
@@ -80,7 +81,7 @@ namespace RPG.Control
 
             if (m_TimeSinceArrivedAtWaypoint > m_DwellTime)
             {
-                m_Mover.StartMoveAction(nextPosition);
+                m_Mover.StartMoveAction(nextPosition, m_PatrolSpeedFraction);
             }
         }
 
@@ -103,7 +104,7 @@ namespace RPG.Control
         private void SuspicionBehaviour()
         {
             m_Scheduler.CancelCurrentAction();
-            m_Mover.StartMoveAction(m_LastKnownPlayerPosition);
+            m_Mover.StartMoveAction(m_LastKnownPlayerPosition, 1f);
         }
 
         private void AttackBehaviour()
