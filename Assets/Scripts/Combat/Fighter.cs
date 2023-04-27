@@ -47,10 +47,17 @@ namespace RPG.Combat
 
         private void AttackBehaviour()
         {
+            
             if (m_TimeSinceLastAttack < m_TimeBetweenAttacks) return;
-
             m_TimeSinceLastAttack = 0;
+
+            //This will trigger the hit event
             m_Animator.SetTrigger("attack");
+        }
+
+        //Animation Event - DON'T REMOVE
+        private void Hit()
+        {
             m_Target.m_Health.TakeDamage(m_WeaponDamage);
         }
 
@@ -71,10 +78,5 @@ namespace RPG.Combat
             m_Target = null;
         }
 
-        //Animation Event - DON'T REMOVE
-        private void Hit()
-        {
-
-        }
     }
 }
