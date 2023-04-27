@@ -10,7 +10,7 @@ namespace RPG.Combat
     [RequireComponent(typeof(Animator))]
     public class Fighter : MonoBehaviour, IAction
     {
-        [SerializeField] private float m_WeaponRange = 2.0f;
+        [SerializeField] private float m_WeaponRange = 0.1f;
         [SerializeField] private float m_TimeBetweenAttacks = 1f;
         [SerializeField] private float m_WeaponDamage = 5.0f;
 
@@ -33,6 +33,7 @@ namespace RPG.Combat
             m_TimeSinceLastAttack += Time.deltaTime;
 
             if (m_Target == null) return;
+            if (m_Target.m_Health.IsDead()) return;
 
             if (!GetIsInRange())
             {
@@ -75,6 +76,7 @@ namespace RPG.Combat
 
         public void Cancel()
         {
+            m_Animator.SetTrigger("stopAttack");
             m_Target = null;
         }
 

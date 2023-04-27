@@ -22,11 +22,21 @@ namespace RPG.Combat
 
             if (m_Health == 0 && !m_IsDead)
             {
-                m_IsDead = true;
-                m_Animator.SetTrigger("death");
+                Death();
             }
 
             Debug.Log($"[{gameObject.name}] - Health: {m_Health}");
+        }
+
+        private void Death()
+        {
+            m_IsDead = true;
+            m_Animator.SetTrigger("death");
+        }
+
+        public bool IsDead()
+        {
+            return m_IsDead;
         }
     }
 }
