@@ -1,5 +1,8 @@
-using RPG.Combat;
 using UnityEngine;
+
+//RPG
+using RPG.Combat;
+using RPG.Core;
 
 namespace RPG.Control
 {
@@ -9,15 +12,19 @@ namespace RPG.Control
 
         private GameObject m_Player;
         private Fighter m_Fighter;
+        private Health m_Health;
 
         private void Start()
         {
             m_Player = GameObject.FindWithTag("Player");
             m_Fighter = GetComponent<Fighter>();
+            m_Health = GetComponent<Health>();
         }
 
         private void Update()
         {
+            if (m_Health.IsDead()) return;
+
             AttackBehaviour();
         }
 

@@ -1,7 +1,9 @@
 using UnityEngine;
+
+//RPG
 using RPG.Movement;
 using RPG.Combat;
-using System;
+using RPG.Core;
 
 namespace RPG.Control
 {
@@ -11,17 +13,21 @@ namespace RPG.Control
     {
         private Mover m_Mover;
         private Fighter m_Fighter;
+        private Health m_Health;
 
         // Start is called before the first frame update
         void Start()
         {
             m_Mover = GetComponent<Mover>();
             m_Fighter = GetComponent<Fighter>();
+            m_Health = GetComponent<Health>();
         }
 
         // Update is called once per frame
         void Update()
         {
+            if (m_Health.IsDead()) return;
+
             if (InteractWithCombat()) return;
             if (InteractWithMovement()) return;
             Debug.Log("No Possible Actions");

@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
+
+//RPG
 using RPG.Combat;
 using RPG.Core;
 
@@ -12,6 +14,7 @@ namespace RPG.Movement
         private NavMeshAgent m_Agent;
         private Animator m_Animator;
         private ActionScheduler m_Scheduler;
+        private Health m_Health;
 
         // Start is called before the first frame update
         void Start()
@@ -19,11 +22,14 @@ namespace RPG.Movement
             m_Agent = GetComponent<NavMeshAgent>();
             m_Animator = GetComponent<Animator>();
             m_Scheduler = GetComponent<ActionScheduler>();
+            m_Health = GetComponent<Health>();
         }
 
         // Update is called once per frame
         private void Update()
         {
+            m_Agent.enabled = !m_Health.IsDead();
+
             UpdateAnimator();
         }
 

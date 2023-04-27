@@ -1,6 +1,8 @@
-using RPG.Core;
 using UnityEngine;
+
+//RPG
 using RPG.Movement;
+using RPG.Core;
 
 
 namespace RPG.Combat
@@ -15,7 +17,7 @@ namespace RPG.Combat
         [SerializeField] private float m_WeaponDamage = 5.0f;
 
 
-        private float m_TimeSinceLastAttack;
+        private float m_TimeSinceLastAttack = Mathf.Infinity;
         private Health m_Target;
         private Mover m_Mover;
         private ActionScheduler m_Scheduler;
