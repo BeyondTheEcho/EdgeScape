@@ -35,6 +35,8 @@ namespace RPG.Control
             {
                 if (hit.transform.gameObject.TryGetComponent(out CombatTarget target))
                 {
+                    if (!target.m_Health.CanAttack()) continue;
+
                     if (Input.GetMouseButtonDown(0))
                     {
                         m_Fighter.Attack(target);                       

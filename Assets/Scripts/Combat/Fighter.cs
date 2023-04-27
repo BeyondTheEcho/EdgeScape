@@ -48,17 +48,26 @@ namespace RPG.Combat
 
         private void AttackBehaviour()
         {
-            
+            transform.LookAt(m_Target.transform);
+
             if (m_TimeSinceLastAttack < m_TimeBetweenAttacks) return;
             m_TimeSinceLastAttack = 0;
 
             //This will trigger the hit event
+            TriggerAttack();
+        }
+
+        private void TriggerAttack()
+        {
+            m_Animator.ResetTrigger("stopAttack");
             m_Animator.SetTrigger("attack");
         }
 
         //Animation Event - DON'T REMOVE
         private void Hit()
         {
+            if (m_Target == null) return;
+
             m_Target.m_Health.TakeDamage(m_WeaponDamage);
         }
 
@@ -76,9 +85,14 @@ namespace RPG.Combat
 
         public void Cancel()
         {
-            m_Animator.SetTrigger("stopAttack");
+            StopAttack();
             m_Target = null;
         }
 
+        private void StopAttack()
+        {
+            m_Animator.ResetTrigger("attack");
+            m_Animator.SetTrigger("stopAttack");
+        }
     }
 }
