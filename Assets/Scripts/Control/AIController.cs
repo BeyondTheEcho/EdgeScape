@@ -11,6 +11,10 @@ namespace RPG.Control
     {
         [SerializeField] private float m_ChaseDistance = 5.0f;
         [SerializeField] private float m_SuspisionTime = 5.0f;
+        [SerializeField] private PatrolPath m_PatrolPath = null;
+        [SerializeField] private float m_WaypointTolerance = 1.0f;
+        [SerializeField] private float m_DwellTime = 5.0f;
+
 
         private GameObject m_Player;
         private ActionScheduler m_Scheduler;
@@ -20,6 +24,8 @@ namespace RPG.Control
         private Vector3 m_GuardPosition;
         private Vector3 m_LastKnownPlayerPosition;
         private float m_TimeSincePlayerLastSeen = Mathf.Infinity;
+        private float m_TimeSinceArrivedAtWaypoint = Mathf.Infinity;
+        private int m_CurrentWaypoint = 0;
 
         private void Start()
         {
@@ -45,15 +51,53 @@ namespace RPG.Control
             }
             else
             {
-                GuardBehaviour();
+                PatrolBehaviour();
             }
 
-            m_TimeSincePlayerLastSeen += Time.deltaTime;
+            UpdateTimers();
         }
 
-        private void GuardBehaviour()
+        private void UpdateTimers()
         {
-            m_Mover.StartMoveAction(m_GuardPosition);
+            m_TimeSincePlayerLastSeen += Time.deltaTime;
+            m_TimeSinceArrivedAtWaypoint += Time.deltaTime;
+        }
+
+        private void PatrolBehaviour()
+        {
+            Vector3 nextPosition = m_GuardPosition;
+
+            if (m_PatrolPath != null)
+            {
+                if (AtWaypoint())
+                {
+                    m_TimeSinceArrivedAtWaypoint = 0;
+                    CycleWaypoint();
+                }
+
+                nextPosition = GetCurrentWaypoint();
+            }
+
+            if (m_TimeSinceArrivedAtWaypoint > m_DwellTime)
+            {
+                m_Mover.StartMoveAction(nextPosition);
+            }
+        }
+
+        private Vector3 GetCurrentWaypoint()
+        {
+            return m_PatrolPath.GetWaypoint(m_CurrentWaypoint);
+        }
+
+        private void CycleWaypoint()
+        {
+            m_CurrentWaypoint = m_PatrolPath.GetNextIndex(m_CurrentWaypoint);
+        }
+
+        private bool AtWaypoint()
+        {
+            float distanceToWaypoint = Vector3.Distance(transform.position, GetCurrentWaypoint());
+            return distanceToWaypoint < m_WaypointTolerance;
         }
 
         private void SuspicionBehaviour()
