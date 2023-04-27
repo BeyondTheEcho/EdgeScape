@@ -15,7 +15,7 @@ namespace RPG.Combat
 
 
         private float m_TimeSinceLastAttack;
-        private Transform m_Target;
+        private CombatTarget m_Target;
         private Mover m_Mover;
         private ActionScheduler m_Scheduler;
         private Animator m_Animator;
@@ -35,7 +35,7 @@ namespace RPG.Combat
 
             if (!GetIsInRange())
             {
-                m_Mover.MoveTo(m_Target.position);
+                m_Mover.MoveTo(m_Target.transform.position);
             }
             else
             {
@@ -50,18 +50,19 @@ namespace RPG.Combat
 
             m_TimeSinceLastAttack = 0;
             m_Animator.SetTrigger("attack");
+            m_Target.m_Health.TakeDamage(5);
         }
 
         private bool GetIsInRange()
         {
-            bool isInRange = Vector3.Distance(transform.position, m_Target.position) < m_WeaponRange;
+            bool isInRange = Vector3.Distance(transform.position, m_Target.transform.position) < m_WeaponRange;
             return isInRange;
         }
 
         public void Attack(CombatTarget target)
         {
             m_Scheduler.StartAction(this);
-            m_Target = target.transform;
+            m_Target = target;
         }
 
         public void Cancel()
