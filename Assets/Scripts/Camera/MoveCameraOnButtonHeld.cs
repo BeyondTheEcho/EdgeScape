@@ -7,13 +7,13 @@ namespace UI_UX
     {
         private float m_Sensitivity = 1.5f;
         //Min Radius
-        private float m_TopMinRadius = 3.0f;
-        private float m_MidMinRadius = 5.0f;
-        private float m_BotMinRadius = 3.0f;
+        private float m_TopMinRadius = 5.0f;
+        private float m_MidMinRadius = 10.0f;
+        private float m_BotMinRadius = 5.0f;
         //Max Radius
-        private float m_TopMaxRadius = 30.0f;
-        private float m_MidMaxRadius = 50.0f;
-        private float m_BotMaxRadius = 30.0f;
+        private float m_TopMaxRadius = 20.0f;
+        private float m_MidMaxRadius = 25.0f;
+        private float m_BotMaxRadius = 20.0f;
 
         private float m_CameraRingOffset = 5.0f;
         private CinemachineFreeLook m_Camera;
