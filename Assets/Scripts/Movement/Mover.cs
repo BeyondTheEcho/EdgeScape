@@ -11,7 +11,7 @@ namespace RPG.Movement
     [RequireComponent(typeof(NavMeshAgent))]
     public class Mover : MonoBehaviour, IAction
     {
-        [SerializeField] private float m_MaxSpeed = 6;
+        [SerializeField] private float m_MaxSpeed = 6f;
 
         private NavMeshAgent m_Agent;
         private Animator m_Animator;
@@ -53,8 +53,8 @@ namespace RPG.Movement
 
         public void MoveTo(Vector3 destination, float speedFraction)
         {
-            m_Agent.speed = m_MaxSpeed * Mathf.Clamp01(speedFraction);
             m_Agent.destination = destination;
+            m_Agent.speed = m_MaxSpeed * Mathf.Clamp01(speedFraction);
             m_Agent.isStopped = false;
         }
 

@@ -39,7 +39,11 @@ namespace RPG.Combat
 
             if (!GetIsInRange())
             {
-                m_Mover.MoveTo(m_Target.transform.position, 1f);
+                var speed = 1.0f;
+
+                if (gameObject.tag == "Enemy") speed = 0.75f;
+
+                m_Mover.MoveTo(m_Target.transform.position, speed);
             }
             else
             {
