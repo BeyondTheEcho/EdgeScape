@@ -11,7 +11,7 @@ namespace RPG.Core
         private Animator m_Animator;
         private ActionScheduler m_Scheduler;
 
-        private void Start()
+        private void Awake()
         {
             m_Animator = GetComponent<Animator>();
             m_Scheduler = GetComponent<ActionScheduler>();

@@ -28,14 +28,18 @@ namespace RPG.Control
         private float m_TimeSinceArrivedAtWaypoint = Mathf.Infinity;
         private int m_CurrentWaypoint = 0;
 
-        private void Start()
+        private void Awake()
         {
-            m_GuardPosition = transform.position;
-            m_Player = GameObject.FindWithTag("Player");
             m_Fighter = GetComponent<Fighter>();
             m_Health = GetComponent<Health>();
             m_Mover = GetComponent<Mover>();
             m_Scheduler = GetComponent<ActionScheduler>();
+        }
+
+        private void Start()
+        {
+            m_GuardPosition = transform.position;
+            m_Player = GameObject.FindWithTag("Player");
         }
 
         private void Update()

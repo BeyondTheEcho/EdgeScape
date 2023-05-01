@@ -23,7 +23,7 @@ namespace RPG.Combat
         private ActionScheduler m_Scheduler;
         private Animator m_Animator;
 
-        void Start ()
+        void Awake()
         {
             m_Mover = GetComponent<Mover>();
             m_Scheduler = GetComponent<ActionScheduler>();

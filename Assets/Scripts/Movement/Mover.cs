@@ -20,7 +20,7 @@ namespace RPG.Movement
         private SaveableEntity m_Saveable;
 
         // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
             m_Agent = GetComponent<NavMeshAgent>();
             m_Animator = GetComponent<Animator>();
@@ -74,10 +74,10 @@ namespace RPG.Movement
         {
             var pos = (SerializableVector3)state;
 
-            if (GetComponent<NavMeshAgent>().Warp(pos.ToVector()))
+            if (m_Agent.Warp(pos.ToVector()))
             {
-                GetComponent<ActionScheduler>().CancelCurrentAction();
-                print("Restored state for: " + GetComponent<SaveableEntity>().GetUniqueIdentifier());
+                m_Scheduler.CancelCurrentAction();
+                print("Restored state for: " + m_Saveable.GetUniqueIdentifier());
             }
         }
     }
