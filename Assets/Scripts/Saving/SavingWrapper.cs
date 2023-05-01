@@ -4,18 +4,34 @@ namespace RPG.Saving
 {
     public class SavingWrapper : MonoBehaviour
     {
-        const string defaultSaveFile = "save";
+        const string m_SaveFileName = "save";
+        private SavingSystem m_SavingSystem;
+
+        private void Start()
+        {
+            m_SavingSystem = GetComponent<SavingSystem>();
+        }
 
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.S))
             {
-                GetComponent<SavingSystem>().Save(defaultSaveFile);
+                Save();
             }
             if (Input.GetKeyDown(KeyCode.L))
             {
-                GetComponent<SavingSystem>().Load(defaultSaveFile);
+                Load();
             }
+        }
+
+        public void Load()
+        {
+            m_SavingSystem.Load(m_SaveFileName);
+        }
+
+        public void Save()
+        {
+            m_SavingSystem.Save(m_SaveFileName);
         }
     }
 }

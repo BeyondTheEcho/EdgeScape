@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using RPG.Saving;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,6 +16,13 @@ namespace RPG.SceneManagement
         [SerializeField] private float m_FadeOutTime = 1.5f;
         [SerializeField] private float m_FadeInTime = 1.5f;
         [SerializeField] private float m_PauseBetweenFades = 1.5f;
+
+        private SavingWrapper m_SavingWrapper;
+
+        void Start()
+        {
+            m_SavingWrapper = FindObjectOfType<SavingWrapper>();
+        }
 
         private void OnTriggerEnter(Collider collider)
         {
@@ -36,7 +44,9 @@ namespace RPG.SceneManagement
             DontDestroyOnLoad(gameObject);
 
             yield return StartCoroutine(fader.FadeOut(m_FadeOutTime));
+            m_SavingWrapper.Save();
             yield return SceneManager.LoadSceneAsync(m_SceneToLoad);
+            m_SavingWrapper.Load();
 
             Portal destination = GetOtherPortal();
             UpdatePlayer(destination);
