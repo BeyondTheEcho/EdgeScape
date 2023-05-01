@@ -74,10 +74,10 @@ namespace RPG.Movement
         {
             var pos = (SerializableVector3)state;
 
-            if (m_Agent.Warp(pos.ToVector()))
+            if (GetComponent<NavMeshAgent>().Warp(pos.ToVector()))
             {
-                m_Scheduler.CancelCurrentAction();
-                print("Restored state for: " + m_Saveable.GetUniqueIdentifier());
+                GetComponent<ActionScheduler>().CancelCurrentAction();
+                print("Restored state for: " + GetComponent<SaveableEntity>().GetUniqueIdentifier());
             }
         }
     }
