@@ -34,7 +34,7 @@ namespace RPG.Saving
 
             Debug.Log("Loading from: " + path);
 
-            using (FileStream stream = File.Open(path, FileMode.Open))
+           using (FileStream stream = File.Open(path, FileMode.Open))
            {
                BinaryFormatter formatter = new BinaryFormatter();
 

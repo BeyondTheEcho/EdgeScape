@@ -1,6 +1,8 @@
 using RPG.Core;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections.Generic;
+using System;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -12,25 +14,57 @@ namespace RPG.Saving
     public class SaveableEntity : MonoBehaviour
     {
         [SerializeField] string uniqueIdentifier = "";
+        public static Dictionary<string, SaveableEntity> s_GUIDRegistry = new Dictionary<string, SaveableEntity>();
 
         public string GetUniqueIdentifier()
         {
             return uniqueIdentifier;
         }
 
+        private bool IsUnique(string guid)
+        {
+            if (!s_GUIDRegistry.ContainsKey(guid)) return true;
+            if (s_GUIDRegistry[guid] == this) return true;
+
+            if (s_GUIDRegistry[guid] == null)
+            {
+                s_GUIDRegistry.Remove(guid);
+                return true;
+            }
+
+            if (s_GUIDRegistry[guid].GetUniqueIdentifier() != guid)
+            {
+                s_GUIDRegistry.Remove(guid);
+                return true;
+            }
+
+            return false;
+        }
+
         public object CaptureState()
         {
-            return new SerializableVector3(transform.position);
+            Dictionary<string, object> state = new Dictionary<string, object>();
+
+            foreach (ISaveable saveable in GetComponents<ISaveable>())
+            {
+                state[saveable.GetType().ToString()] = saveable.CaptureState();
+            }
+
+            return state;
         }
 
         public void RestoreState(object state)
         {
-            var pos = (SerializableVector3)state;
+            Dictionary<string, object> stateDict = (Dictionary<string, object>)state;
 
-            if (GetComponent<NavMeshAgent>().Warp(pos.ToVector()))
+            foreach (ISaveable saveable in GetComponents<ISaveable>())
             {
-                GetComponent<ActionScheduler>().CancelCurrentAction();
-                print("Restored state for " + GetUniqueIdentifier());
+                string typeString = saveable.GetType().ToString();
+
+                if (stateDict.ContainsKey(typeString)) 
+                {
+                    saveable.RestoreState(stateDict[typeString]);
+                }
             }
         }
 
@@ -43,11 +77,13 @@ namespace RPG.Saving
             SerializedObject serializedObject = new SerializedObject(this);
             SerializedProperty property = serializedObject.FindProperty("uniqueIdentifier");
 
-            if (string.IsNullOrEmpty(property.stringValue))
+            if (string.IsNullOrEmpty(property.stringValue) || !IsUnique(property.stringValue))
             {
                 property.stringValue = System.Guid.NewGuid().ToString();
                 serializedObject.ApplyModifiedProperties();
             }
+
+            s_GUIDRegistry[property.stringValue] = this;
         }
 #endif
     }
