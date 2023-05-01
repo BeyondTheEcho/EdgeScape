@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace RPG.Saving
@@ -7,9 +8,14 @@ namespace RPG.Saving
         const string m_SaveFileName = "save";
         private SavingSystem m_SavingSystem;
 
-        private void Start()
+        private void Awake()
         {
             m_SavingSystem = GetComponent<SavingSystem>();
+        }
+
+        private IEnumerator Start()
+        {
+            yield return m_SavingSystem.LoadLastScene(m_SaveFileName);
         }
 
         private void Update()

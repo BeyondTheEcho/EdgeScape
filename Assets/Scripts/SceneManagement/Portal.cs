@@ -51,6 +51,8 @@ namespace RPG.SceneManagement
             Portal destination = GetOtherPortal();
             UpdatePlayer(destination);
 
+            m_SavingWrapper.Save();
+
             yield return new WaitForSeconds(m_PauseBetweenFades);
             yield return StartCoroutine(fader.FadeIn(m_FadeInTime));
 
