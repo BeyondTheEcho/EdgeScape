@@ -15,7 +15,6 @@ namespace UI_UX
         private float m_MidMaxRadius = 25.0f;
         private float m_BotMaxRadius = 20.0f;
 
-        private float m_CameraRingOffset = 5.0f;
         private CinemachineFreeLook m_Camera;
 
         enum CameraOrbits
@@ -86,14 +85,14 @@ namespace UI_UX
             {
                 if (Input.GetMouseButton(2))
                 {
-                    return UnityEngine.Input.GetAxis("Mouse Y");
+                    return Input.GetAxis("Mouse Y");
                 }
                 else
                 {
                     return 0;
                 }
             }
-            return UnityEngine.Input.GetAxis(axisName);
+            return Input.GetAxis(axisName);
         }
     }
 }

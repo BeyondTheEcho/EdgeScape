@@ -19,7 +19,7 @@ namespace RPG.SceneManagement
 
         private SavingWrapper m_SavingWrapper;
 
-        void Start()
+        void Awake()
         {
             m_SavingWrapper = FindObjectOfType<SavingWrapper>();
         }

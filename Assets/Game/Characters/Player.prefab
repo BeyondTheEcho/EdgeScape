@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -5936019099136476511, guid: 4eed3f4aa673d1a43972404bd5199e4a, type: 3}
+      propertyPath: uniqueIdentifier
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 20774391448910479, guid: 4eed3f4aa673d1a43972404bd5199e4a, type: 3}
       propertyPath: m_BaseOffset
       value: -0.12

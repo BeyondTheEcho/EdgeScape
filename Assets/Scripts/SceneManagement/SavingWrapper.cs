@@ -8,11 +8,11 @@ namespace RPG.SceneManagement
     {
         [SerializeField] private float m_FadeInTime = 3f;
         const string m_SaveFileName = "save";
-        private SavingSystem m_SavingSystem;
+        private JsonSavingSystem m_SavingSystem;
 
         private void Awake()
         {
-            m_SavingSystem = GetComponent<SavingSystem>();
+            m_SavingSystem = GetComponent<JsonSavingSystem>();
         }
 
         private IEnumerator Start()

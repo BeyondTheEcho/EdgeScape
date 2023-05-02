@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,7 +10,7 @@ namespace RPG.Movement
 {
     [RequireComponent(typeof(ActionScheduler))]
     [RequireComponent(typeof(NavMeshAgent))]
-    public class Mover : MonoBehaviour, IAction, ISaveable
+    public class Mover : MonoBehaviour, IAction, IJsonSaveable
     {
         [SerializeField] private float m_MaxSpeed = 6f;
 
@@ -17,7 +18,7 @@ namespace RPG.Movement
         private Animator m_Animator;
         private ActionScheduler m_Scheduler;
         private Health m_Health;
-        private SaveableEntity m_Saveable;
+        private JsonSaveableEntity m_Saveable;
 
         // Start is called before the first frame update
         void Awake()
@@ -26,7 +27,7 @@ namespace RPG.Movement
             m_Animator = GetComponent<Animator>();
             m_Scheduler = GetComponent<ActionScheduler>();
             m_Health = GetComponent<Health>();
-            m_Saveable = GetComponent<SaveableEntity>();
+            m_Saveable = GetComponent<JsonSaveableEntity>();
         }
 
         // Update is called once per frame
@@ -65,22 +66,30 @@ namespace RPG.Movement
             m_Agent.isStopped = true;
         }
 
-        public object CaptureState()
+        public JToken CaptureAsJToken()
         {
-            return new SerializableVector3(transform.position);
+            return transform.position.ToToken();
         }
 
-        public void RestoreState(object state)
+        public void RestoreFromJToken(JToken state)
         {
-            var pos = (SerializableVector3)state;
+            Vector3 pos = state.ToVector3();
 
-            if (NavMesh.SamplePosition(pos.ToVector(), out NavMeshHit hit, 1f, NavMesh.AllAreas))
-            {
-                if (m_Agent.Warp(hit.position))
-                {
-                    m_Scheduler.CancelCurrentAction();
-                }
-            }
+            //if (NavMesh.SamplePosition(pos, out NavMeshHit hit, 5f, 1))
+            //{
+            //    m_Agent.Warp(hit.position);
+            //}
+            //else
+            //{
+            //    m_Agent.Warp(pos);
+            //}
+
+            m_Agent.enabled = false;
+            transform.position = pos;
+            m_Agent.enabled = true;
+
+            m_Scheduler.CancelCurrentAction();
         }
+
     }
 }
