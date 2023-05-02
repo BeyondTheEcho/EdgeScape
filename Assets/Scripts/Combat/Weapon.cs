@@ -11,7 +11,7 @@ namespace RPG.Combat
         [SerializeField] private GameObject m_WeaponPrefab;
 
         //Weapon Stats
-        [SerializeField] private float m_WeaponRange = 0.1f;
+        [SerializeField] private float m_WeaponRange = 1.5f;
         [SerializeField] private float m_WeaponDamage = 5.0f;
 
         public void Spawn(Transform handTransform, Animator animator)

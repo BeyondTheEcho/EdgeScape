@@ -14,13 +14,14 @@ namespace RPG.Combat
     {
         [SerializeField] private float m_TimeBetweenAttacks = 1f;
         [SerializeField] private Transform m_HandPosition;
-        [SerializeField] private Weapon m_Weapon;
+        [SerializeField] private Weapon m_DefaultWeapon;
 
         private float m_TimeSinceLastAttack = Mathf.Infinity;
         private Health m_Target;
         private Mover m_Mover;
         private ActionScheduler m_Scheduler;
         private Animator m_Animator;
+        private Weapon m_CurrentWeapon;
 
         void Awake()
         {
@@ -31,10 +32,7 @@ namespace RPG.Combat
 
         void Start()
         {
-            if (gameObject.tag == "Player")
-            {
-                SpawnWeapon();
-            }
+            EquipWeapon(m_DefaultWeapon);
         }
 
         private void Update()
@@ -81,12 +79,12 @@ namespace RPG.Combat
         {
             if (m_Target == null) return;
 
-            m_Target.TakeDamage(m_Weapon.GetWeaponDamage());
+            m_Target.TakeDamage(m_CurrentWeapon.GetWeaponDamage());
         }
 
         private bool GetIsInRange()
         {
-            bool isInRange = Vector3.Distance(transform.position, m_Target.transform.position) < m_Weapon.GetWeaponRange();
+            bool isInRange = Vector3.Distance(transform.position, m_Target.transform.position) < m_CurrentWeapon.GetWeaponRange();
             return isInRange;
         }
 
@@ -116,11 +114,10 @@ namespace RPG.Combat
             m_Animator.SetTrigger("stopAttack");
         }
 
-        private void SpawnWeapon()
+        public void EquipWeapon(Weapon weapon)
         {
-            if (m_Weapon == null) return;
-
-            m_Weapon.Spawn(m_HandPosition, m_Animator);
+            m_CurrentWeapon = weapon;
+            m_CurrentWeapon.Spawn(m_HandPosition, m_Animator);
         }
     }
 }
