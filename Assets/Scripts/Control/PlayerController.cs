@@ -30,7 +30,7 @@ namespace RPG.Control
 
             if (InteractWithCombat()) return;
             if (InteractWithMovement()) return;
-            Debug.Log("No Possible Actions");
+            //Debug.Log("No Possible Actions");
         }
 
         private bool InteractWithCombat()
