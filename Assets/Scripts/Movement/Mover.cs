@@ -74,12 +74,13 @@ namespace RPG.Movement
         {
             var pos = (SerializableVector3)state;
 
-            if (m_Agent.Warp(pos.ToVector()))
+            if (NavMesh.SamplePosition(pos.ToVector(), out NavMeshHit hit, 1f, NavMesh.AllAreas))
             {
-                m_Scheduler.CancelCurrentAction();
-                print("Restored state for: " + m_Saveable.GetUniqueIdentifier());
+                if (m_Agent.Warp(hit.position))
+                {
+                    m_Scheduler.CancelCurrentAction();
+                }
             }
         }
     }
-
 }
