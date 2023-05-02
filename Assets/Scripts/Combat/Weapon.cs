@@ -10,11 +10,31 @@ namespace RPG.Combat
         [SerializeField] private AnimatorOverrideController m_AnimatorOverride;
         [SerializeField] private GameObject m_WeaponPrefab;
 
+        //Weapon Stats
+        [SerializeField] private float m_WeaponRange = 0.1f;
+        [SerializeField] private float m_WeaponDamage = 5.0f;
+
         public void Spawn(Transform handTransform, Animator animator)
         {
-            Instantiate(m_WeaponPrefab, handTransform);
+            if (m_WeaponPrefab != null)
+            {
+                Instantiate(m_WeaponPrefab, handTransform);
+            }
 
-            animator.runtimeAnimatorController = m_AnimatorOverride;
+            if (m_AnimatorOverride != null)
+            {
+                animator.runtimeAnimatorController = m_AnimatorOverride;
+            }
+        }
+
+        public float GetWeaponRange()
+        {
+            return m_WeaponRange;
+        }
+
+        public float GetWeaponDamage()
+        {
+            return m_WeaponDamage;
         }
     }
 }

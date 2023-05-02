@@ -12,9 +12,7 @@ namespace RPG.Combat
     [RequireComponent(typeof(Animator))]
     public class Fighter : MonoBehaviour, IAction
     {
-        [SerializeField] private float m_WeaponRange = 0.1f;
         [SerializeField] private float m_TimeBetweenAttacks = 1f;
-        [SerializeField] private float m_WeaponDamage = 5.0f;
         [SerializeField] private Transform m_HandPosition;
         [SerializeField] private Weapon m_Weapon;
 
@@ -83,12 +81,12 @@ namespace RPG.Combat
         {
             if (m_Target == null) return;
 
-            m_Target.TakeDamage(m_WeaponDamage);
+            m_Target.TakeDamage(m_Weapon.GetWeaponDamage());
         }
 
         private bool GetIsInRange()
         {
-            bool isInRange = Vector3.Distance(transform.position, m_Target.transform.position) < m_WeaponRange;
+            bool isInRange = Vector3.Distance(transform.position, m_Target.transform.position) < m_Weapon.GetWeaponRange();
             return isInRange;
         }
 

@@ -59,6 +59,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3160986002611689557, guid: 4eed3f4aa673d1a43972404bd5199e4a, type: 3}
+      propertyPath: m_Weapon
+      value: 
+      objectReference: {fileID: 11400000, guid: f12a6610a5fd303418e51bd11a0ff4d9, type: 2}
+    - target: {fileID: 3160986002611689557, guid: 4eed3f4aa673d1a43972404bd5199e4a, type: 3}
+      propertyPath: m_HandPosition
+      value: 
+      objectReference: {fileID: 5529619644839803562}
     - target: {fileID: 4517695660298269725, guid: 4eed3f4aa673d1a43972404bd5199e4a, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -97,7 +105,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21421d933a13728478030f53ae23c88a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Health: {fileID: 0}
 --- !u!114 &5679126463926021424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,3 +209,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
+--- !u!4 &5529619644839803562 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 423694, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
+  m_PrefabInstance: {fileID: 5529619644839939492}
+  m_PrefabAsset: {fileID: 0}
