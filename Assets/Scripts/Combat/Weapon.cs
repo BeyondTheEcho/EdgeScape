@@ -17,7 +17,6 @@ namespace RPG.Combat
         [SerializeField] private float m_WeaponDamage = 5.0f;
         [SerializeField] private bool m_IsRightHanded = true;
 
-
         public void Spawn(Transform rightHandTransform, Transform leftHandTransform, Animator animator)
         {
             Transform spawnPos = GetTransform(rightHandTransform, leftHandTransform);
@@ -47,7 +46,7 @@ namespace RPG.Combat
         public void LaunchProjectile(Transform rHand, Transform lHand, Health target)
         {
             Projectile projectileInst = Instantiate(m_ProjectilePrefab, GetTransform(rHand, lHand).position, Quaternion.identity);
-            projectileInst.SetTarget(target);
+            projectileInst.SetTarget(target, m_WeaponDamage);
         }
 
         public float GetWeaponRange()

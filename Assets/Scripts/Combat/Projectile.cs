@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using RPG.Core;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace RPG.Combat
@@ -12,7 +13,7 @@ namespace RPG.Combat
 
         private Health m_Target;
         private CapsuleCollider m_CapsuleCollider = null;
-
+        private float m_Damage = 0;
 
         // Update is called once per frame
         void Update()
@@ -38,9 +39,18 @@ namespace RPG.Combat
             return m_Target.transform.position + Vector3.up * m_CapsuleCollider.height / 2;
         }
 
-        public void SetTarget(Health target)
+        public void SetTarget(Health target, float damage)
         {
             m_Target = target;
+            m_Damage = m_Damage = damage;
+        }
+
+        private void OnTriggerEnter(Collider collider)
+        {
+            if (collider.gameObject != m_Target.gameObject) return;
+
+            m_Target.TakeDamage(m_Damage);
+            Destroy(gameObject);
         }
     }
 }
