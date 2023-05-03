@@ -17,19 +17,38 @@ namespace RPG.Combat
         [SerializeField] private float m_WeaponDamage = 5.0f;
         [SerializeField] private bool m_IsRightHanded = true;
 
-        public void Spawn(Transform rightHandTransform, Transform leftHandTransform, Animator animator)
+        private const string m_WeaponName = "Weapon";
+
+        public void Spawn(Transform rHand, Transform lHand, Animator animator)
         {
-            Transform spawnPos = GetTransform(rightHandTransform, leftHandTransform);
+            DestroyOldWeapon(rHand, lHand);
 
             if (m_WeaponPrefab != null)
             {
-                Instantiate(m_WeaponPrefab, spawnPos);
+                Transform spawnPos = GetTransform(rHand, lHand);
+                GameObject weapon = Instantiate(m_WeaponPrefab, spawnPos);
+                weapon.name = m_WeaponName;
             }
 
             if (m_AnimatorOverride != null)
             {
                 animator.runtimeAnimatorController = m_AnimatorOverride;
             }
+        }
+
+        private void DestroyOldWeapon(Transform rHand, Transform lHand)
+        {
+            Transform oldWeapon = rHand.Find(m_WeaponName);
+
+            if (oldWeapon == null)
+            {
+                oldWeapon = lHand.Find(m_WeaponName);
+            }
+
+            if (oldWeapon == null) return;
+
+            oldWeapon.name = "DESTROYING";
+            Destroy(oldWeapon.gameObject);
         }
 
         //Returns the transform of the correct hand based on the status of the m_IsRightHanded Bool
