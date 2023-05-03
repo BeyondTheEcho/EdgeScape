@@ -13,12 +13,15 @@ namespace RPG.Combat
         //Weapon Stats
         [SerializeField] private float m_WeaponRange = 1.5f;
         [SerializeField] private float m_WeaponDamage = 5.0f;
+        [SerializeField] private bool m_isRightHanded = true;
 
-        public void Spawn(Transform handTransform, Animator animator)
+        public void Spawn(Transform rightHandTransform, Transform leftHandTransform, Animator animator)
         {
+            Transform spawnPos = m_isRightHanded ? rightHandTransform : leftHandTransform;
+
             if (m_WeaponPrefab != null)
             {
-                Instantiate(m_WeaponPrefab, handTransform);
+                Instantiate(m_WeaponPrefab, spawnPos);
             }
 
             if (m_AnimatorOverride != null)

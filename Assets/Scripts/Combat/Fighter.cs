@@ -13,7 +13,8 @@ namespace RPG.Combat
     public class Fighter : MonoBehaviour, IAction
     {
         [SerializeField] private float m_TimeBetweenAttacks = 1f;
-        [SerializeField] private Transform m_HandPosition;
+        [SerializeField] private Transform m_RightHandPosition;
+        [SerializeField] private Transform m_LeftHandPosition;
         [SerializeField] private Weapon m_DefaultWeapon;
 
         private float m_TimeSinceLastAttack = Mathf.Infinity;
@@ -117,7 +118,7 @@ namespace RPG.Combat
         public void EquipWeapon(Weapon weapon)
         {
             m_CurrentWeapon = weapon;
-            m_CurrentWeapon.Spawn(m_HandPosition, m_Animator);
+            m_CurrentWeapon.Spawn(m_RightHandPosition, m_LeftHandPosition, m_Animator);
         }
     }
 }
