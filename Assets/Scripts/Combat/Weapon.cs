@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using RPG.Core;
 using UnityEngine;
 
 namespace RPG.Combat
@@ -9,15 +10,17 @@ namespace RPG.Combat
     {
         [SerializeField] private AnimatorOverrideController m_AnimatorOverride;
         [SerializeField] private GameObject m_WeaponPrefab;
+        [SerializeField] private Projectile m_ProjectilePrefab;
 
         //Weapon Stats
         [SerializeField] private float m_WeaponRange = 1.5f;
         [SerializeField] private float m_WeaponDamage = 5.0f;
-        [SerializeField] private bool m_isRightHanded = true;
+        [SerializeField] private bool m_IsRightHanded = true;
+
 
         public void Spawn(Transform rightHandTransform, Transform leftHandTransform, Animator animator)
         {
-            Transform spawnPos = m_isRightHanded ? rightHandTransform : leftHandTransform;
+            Transform spawnPos = GetTransform(rightHandTransform, leftHandTransform);
 
             if (m_WeaponPrefab != null)
             {
@@ -28,6 +31,23 @@ namespace RPG.Combat
             {
                 animator.runtimeAnimatorController = m_AnimatorOverride;
             }
+        }
+
+        //Returns the transform of the correct hand based on the status of the m_IsRightHanded Bool
+        private Transform GetTransform(Transform rightHandTransform, Transform leftHandTransform)
+        {
+            return m_IsRightHanded ? rightHandTransform : leftHandTransform;
+        }
+
+        public bool HasProjectile()
+        {
+            return m_ProjectilePrefab != null;
+        }
+
+        public void LaunchProjectile(Transform rHand, Transform lHand, Health target)
+        {
+            Projectile projectileInst = Instantiate(m_ProjectilePrefab, GetTransform(rHand, lHand).position, Quaternion.identity);
+            projectileInst.SetTarget(target);
         }
 
         public float GetWeaponRange()

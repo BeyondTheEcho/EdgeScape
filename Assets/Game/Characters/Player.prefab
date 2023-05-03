@@ -68,6 +68,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 41eaa5a728a1c4f428822f2fbd4de430, type: 2}
     - target: {fileID: 3160986002611689557, guid: 4eed3f4aa673d1a43972404bd5199e4a, type: 3}
+      propertyPath: m_LeftHand
+      value: 
+      objectReference: {fileID: 2843729024430311174}
+    - target: {fileID: 3160986002611689557, guid: 4eed3f4aa673d1a43972404bd5199e4a, type: 3}
+      propertyPath: m_RightHand
+      value: 
+      objectReference: {fileID: 2843729024430253934}
+    - target: {fileID: 3160986002611689557, guid: 4eed3f4aa673d1a43972404bd5199e4a, type: 3}
       propertyPath: m_HandPosition
       value: 
       objectReference: {fileID: 2843729024430253934}
