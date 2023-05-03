@@ -10,17 +10,27 @@ namespace RPG.Combat
     public class Projectile : MonoBehaviour
     {
         [SerializeField] private float m_Speed = 3f;
+        [SerializeField] private bool m_IsHoming = true;
 
         private Health m_Target;
         private CapsuleCollider m_CapsuleCollider = null;
         private float m_Damage = 0;
+
+        void Start()
+        {
+            transform.LookAt(GetAimLocation());
+        }
 
         // Update is called once per frame
         void Update()
         {
             if (m_Target == null) return;
 
-            transform.LookAt(GetAimLocation());
+            if (m_IsHoming && !m_Target.IsDead())
+            {
+                transform.LookAt(GetAimLocation());
+            }
+
             transform.Translate(Vector3.forward * m_Speed * Time.deltaTime);
         }
 
@@ -48,6 +58,7 @@ namespace RPG.Combat
         private void OnTriggerEnter(Collider collider)
         {
             if (collider.gameObject != m_Target.gameObject) return;
+            if (m_Target.IsDead()) return;
 
             m_Target.TakeDamage(m_Damage);
             Destroy(gameObject);

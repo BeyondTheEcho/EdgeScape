@@ -179,5 +179,9 @@ PrefabInstance:
       propertyPath: m_Parameters.colorGradient.m_NumColorKeys
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 8042953940528548715, guid: 22f97e10ed2db4b4784ab7127d6a1ad0, type: 3}
+      propertyPath: m_IsHoming
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22f97e10ed2db4b4784ab7127d6a1ad0, type: 3}
