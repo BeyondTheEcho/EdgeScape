@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: uniqueIdentifier
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: -4388151616419498256, guid: 4eed3f4aa673d1a43972404bd5199e4a, type: 3}
+      propertyPath: m_CenterMass
+      value: 
+      objectReference: {fileID: 2843729024430261304}
     - target: {fileID: 20774391448910479, guid: 4eed3f4aa673d1a43972404bd5199e4a, type: 3}
       propertyPath: m_BaseOffset
       value: -0.12
@@ -241,6 +245,11 @@ PrefabInstance:
 --- !u!4 &2843729024430253934 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 461188, guid: 679ff741e12a7e740819ede24a7000b7, type: 3}
+  m_PrefabInstance: {fileID: 2843729024430452458}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2843729024430261304 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 486098, guid: 679ff741e12a7e740819ede24a7000b7, type: 3}
   m_PrefabInstance: {fileID: 2843729024430452458}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &2843729024430311174 stripped

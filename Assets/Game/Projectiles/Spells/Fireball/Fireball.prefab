@@ -4889,6 +4889,18 @@ PrefabInstance:
       propertyPath: m_HitEffect
       value: 
       objectReference: {fileID: 2302457091093092515, guid: 69d1b1037536b504884c93bb73d662db, type: 3}
+    - target: {fileID: 6520106001648398084, guid: bdeb94d7e49b0e64cb81998bcf4c3cab, type: 3}
+      propertyPath: m_LifetimeAfterImpact
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6520106001648398084, guid: bdeb94d7e49b0e64cb81998bcf4c3cab, type: 3}
+      propertyPath: m_DestroyOnHit.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6520106001648398084, guid: bdeb94d7e49b0e64cb81998bcf4c3cab, type: 3}
+      propertyPath: m_DestroyOnHit.Array.data[0]
+      value: 
+      objectReference: {fileID: 6987048467614620637}
     - target: {fileID: 8820512951853047654, guid: bdeb94d7e49b0e64cb81998bcf4c3cab, type: 3}
       propertyPath: m_RootOrder
       value: 0

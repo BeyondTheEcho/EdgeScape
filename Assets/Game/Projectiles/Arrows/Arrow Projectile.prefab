@@ -48,8 +48,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Speed: 30
+  m_ProjectileMaxLifetime: 10
   m_IsHoming: 1
   m_HitEffect: {fileID: 4036956539237816109, guid: b46f17a87f78f5a419c185c64c66d45f, type: 3}
+  m_DestroyOnHit: []
+  m_LifetimeAfterImpact: 0.3
+  m_DoesImpale: 1
+  m_EffectsToDestroyOnImpale:
+  - {fileID: 3014445729551723189}
+  m_LifetimeAfterImpale: 10
 --- !u!136 &809224508767877246
 CapsuleCollider:
   m_ObjectHideFlags: 0

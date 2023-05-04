@@ -8,6 +8,7 @@ namespace RPG.Core
     public class Health : MonoBehaviour, IJsonSaveable
     {
         [SerializeField] private float m_Health = 100f;
+        [SerializeField] private Transform m_CenterMass;
 
         private bool m_IsDead = false;
         private Animator m_Animator;
@@ -43,6 +44,11 @@ namespace RPG.Core
         public bool IsDead()
         {
             return m_IsDead;
+        }
+
+        public Transform GetCenterMass()
+        {
+            return m_CenterMass;
         }
 
         public JToken CaptureAsJToken()
