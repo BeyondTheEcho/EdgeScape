@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
-using RPG.Core;
+using RPG.Attributes;
 using Unity.VisualScripting;
 using UnityEngine;
 

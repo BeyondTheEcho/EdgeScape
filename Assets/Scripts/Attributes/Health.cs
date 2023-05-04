@@ -1,9 +1,11 @@
 using Newtonsoft.Json.Linq;
 using RPG.Saving;
+using RPG.Stats;
+using RPG.Core;
 using UnityEngine;
 
 
-namespace RPG.Core
+namespace RPG.Attributes
 {
     public class Health : MonoBehaviour, IJsonSaveable
     {
@@ -13,11 +15,18 @@ namespace RPG.Core
         private bool m_IsDead = false;
         private Animator m_Animator;
         private ActionScheduler m_Scheduler;
+        private BaseStats m_BaseStats;
 
         private void Awake()
         {
             m_Animator = GetComponent<Animator>();
             m_Scheduler = GetComponent<ActionScheduler>();
+            m_BaseStats = GetComponent<BaseStats>();
+        }
+
+        void Start()
+        {
+            m_Health = m_BaseStats.GetHealth();
         }
 
         public void TakeDamage(float damage)
