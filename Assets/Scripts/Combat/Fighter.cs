@@ -3,14 +3,15 @@ using UnityEngine;
 //RPG
 using RPG.Movement;
 using RPG.Core;
-
+using RPG.Saving;
+using Newtonsoft.Json.Linq;
 
 namespace RPG.Combat
 {
     [RequireComponent(typeof(ActionScheduler))]
     [RequireComponent(typeof(Mover))]
     [RequireComponent(typeof(Animator))]
-    public class Fighter : MonoBehaviour, IAction
+    public class Fighter : MonoBehaviour, IAction, IJsonSaveable
     {
         [SerializeField] private float m_TimeBetweenAttacks = 1f;
         [SerializeField] private Transform m_RightHand;
@@ -33,7 +34,10 @@ namespace RPG.Combat
 
         void Start()
         {
-            EquipWeapon(m_DefaultWeapon);
+            if (m_CurrentWeapon == null)
+            {
+                EquipWeapon(m_DefaultWeapon);
+            }
         }
 
         private void Update()
@@ -131,6 +135,25 @@ namespace RPG.Combat
         {
             m_CurrentWeapon = weapon;
             m_CurrentWeapon.Spawn(m_RightHand, m_LeftHand, m_Animator);
+        }
+
+        public void EquipWeapon(string weaponName)
+        {
+            Weapon weapon = Resources.Load<Weapon>(weaponName);
+
+            m_CurrentWeapon = weapon;
+            m_CurrentWeapon.Spawn(m_RightHand, m_LeftHand, m_Animator);
+        }
+
+        public JToken CaptureAsJToken()
+        {
+            return JToken.FromObject(m_CurrentWeapon.name);
+        }
+
+        public void RestoreFromJToken(JToken state)
+        {
+            var weaponName = state.ToObject<string>();
+            EquipWeapon(weaponName);
         }
     }
 }
