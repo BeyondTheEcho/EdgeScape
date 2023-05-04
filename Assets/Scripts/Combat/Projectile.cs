@@ -11,6 +11,7 @@ namespace RPG.Combat
     {
         [SerializeField] private float m_Speed = 3f;
         [SerializeField] private bool m_IsHoming = true;
+        [SerializeField] private GameObject m_HitEffect;
 
         private Health m_Target;
         private CapsuleCollider m_CapsuleCollider = null;
@@ -61,6 +62,12 @@ namespace RPG.Combat
             if (m_Target.IsDead()) return;
 
             m_Target.TakeDamage(m_Damage);
+
+            if (m_HitEffect != null)
+            {
+                Instantiate(m_HitEffect, GetAimLocation(), transform.rotation);
+            }
+
             Destroy(gameObject);
         }
     }
