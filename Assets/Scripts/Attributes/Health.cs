@@ -41,6 +41,11 @@ namespace RPG.Attributes
             Debug.Log($"[{gameObject.name}] - Health: {m_Health}");
         }
 
+        public float GetHealthPercentage()
+        {
+            return 100 * (m_Health / m_BaseStats.GetHealth());
+        }
+
         private void Die()
         {
             if (m_IsDead) return;
