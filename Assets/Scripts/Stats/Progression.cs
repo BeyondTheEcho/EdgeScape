@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 namespace RPG.Stats
 {
@@ -14,16 +15,29 @@ namespace RPG.Stats
         class ProgressionCharacterClass
         {
             [SerializeField] public CharacterClass m_CharacterClass;
-            [SerializeField] public float[] m_Health;
+            [SerializeField] public ProgressionStat[] m_Stats;
         }
 
-        public float GetHealth(CharacterClass charClass, int level)
+        [System.Serializable]
+        class ProgressionStat
         {
-            foreach (var character in m_CharacterClass) 
+            [SerializeField] public Stat m_Stat;
+            [SerializeField] public float[] m_Levels;
+        }
+
+        public float GetStat(Stat stat, CharacterClass charClass, int level)
+        {
+            foreach (var progressionClass in m_CharacterClass) 
             {
-                if (character.m_CharacterClass == charClass)
+                if (progressionClass.m_CharacterClass != charClass) continue;
+
+                foreach (var progressionStat in progressionClass.m_Stats)
                 {
-                    return character.m_Health[level - 1];
+                    if (progressionStat.m_Stat != stat) continue;
+
+                    if(progressionStat.m_Levels.Length < level) continue;
+
+                    return progressionStat.m_Levels[level - 1];
                 }
             }
 
