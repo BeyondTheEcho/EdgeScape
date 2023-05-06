@@ -18,3 +18,26 @@ MonoBehaviour:
   m_WeaponRange: 20
   m_WeaponDamage: 5
   m_IsRightHanded: 0
+  m_Clips:
+  - {fileID: 8300000, guid: a496f31795c67a34298072f79a23318f, type: 3}
+  - {fileID: 8300000, guid: 6ba352f6426fd24499a4ed37efa0bfa6, type: 3}
+  - {fileID: 8300000, guid: 1d2493a235f11a049811d29487051a7e, type: 3}
+  - {fileID: 8300000, guid: 620ada0b4fac12341897ae83a5258614, type: 3}
+  - {fileID: 8300000, guid: d9d4be96cb9bfa046a01ebeaaf20d9ff, type: 3}
+  - {fileID: 8300000, guid: 8156bf22293b96440aeb35204017ce47, type: 3}
+  - {fileID: 8300000, guid: 5f5bf66c344c451489dfd342b6f1005f, type: 3}
+  - {fileID: 8300000, guid: f447885d5dbdeb242bf026df9584bb98, type: 3}
+  - {fileID: 8300000, guid: cadf27fc718846e4ca57248fee1daa77, type: 3}
+  - {fileID: 8300000, guid: 751090db11315cd439592c55f08daac4, type: 3}
+  - {fileID: 8300000, guid: 44d64d75d7885d247b3232612da4666d, type: 3}
+  - {fileID: 8300000, guid: 262aaf75bd2a4ed4784e75284b54302d, type: 3}
+  - {fileID: 8300000, guid: 07fe5554d2fca6448838ff5c6c7bc320, type: 3}
+  - {fileID: 8300000, guid: 2bb26575d29082e4f90392a2040754f3, type: 3}
+  - {fileID: 8300000, guid: dbae1c7099bd03b4fa159938058d894c, type: 3}
+  - {fileID: 8300000, guid: fa8a8368f83586a44a6946ac804d9ee5, type: 3}
+  - {fileID: 8300000, guid: b3a1884f29ccc9d428bc5e81bdfe72ea, type: 3}
+  - {fileID: 8300000, guid: 80d50ff6058fc2f408162249875318a6, type: 3}
+  - {fileID: 8300000, guid: b4a70777dfbf41047a6e41ebcc80f4a8, type: 3}
+  - {fileID: 8300000, guid: 712dd9e7d7f0d8f47aa48bf9c8127131, type: 3}
+  - {fileID: 8300000, guid: 863285178bee3574e99890898d2a1a44, type: 3}
+  - {fileID: 8300000, guid: 98562543c4b621841b570c06ad9c6b5e, type: 3}

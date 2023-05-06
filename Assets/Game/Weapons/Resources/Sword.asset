@@ -14,6 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AnimatorOverride: {fileID: 22100000, guid: fe40f94f7bdef914586b5af6d7a130ce, type: 2}
   m_WeaponPrefab: {fileID: 7186374748540809225, guid: f0bd961d89de205488900400e2f3908f, type: 3}
+  m_ProjectilePrefab: {fileID: 0}
   m_WeaponRange: 3
   m_WeaponDamage: 5
-  m_isRightHanded: 1
+  m_IsRightHanded: 1
+  m_Clips:
+  - {fileID: 8300000, guid: ffa3ceba26b66214990b70db5d2a5db2, type: 3}
+  - {fileID: 8300000, guid: 68f63102e23a00041bf2c6d44b3c69ba, type: 3}
+  - {fileID: 8300000, guid: c44612cb46ce5ce47b0c8e44f3524b8c, type: 3}
+  - {fileID: 8300000, guid: b327070ec9409e748b491e5d67ea2cc8, type: 3}
+  - {fileID: 8300000, guid: 810d20a8b44fcc2469d1150aa2b64cba, type: 3}
+  - {fileID: 8300000, guid: af648bacbc8ac144e843080b0f03a034, type: 3}
+  - {fileID: 8300000, guid: 65d58cfa69d1e904e92c1e9a7af0b565, type: 3}
+  - {fileID: 8300000, guid: 03fb36e9a2e3d0d4db208024cf0be330, type: 3}
+  - {fileID: 8300000, guid: 932ea30d292ce584b8943ab5439eb5f0, type: 3}
+  - {fileID: 8300000, guid: 79b8ced8ee56e614e828136300f730c3, type: 3}
+  - {fileID: 8300000, guid: b1bdcc1346e01d2499ae5ccc338cf5d6, type: 3}
+  - {fileID: 8300000, guid: 97abbe6cad7e75c46907534461056b81, type: 3}

@@ -27,6 +27,7 @@ namespace RPG.Combat
         private Weapon m_CurrentWeapon;
         private AudioSource m_AudioSource;
         private bool m_PlaySFX = true;
+        private bool m_IsPlayer = false;
 
         void Awake()
         {
@@ -38,6 +39,8 @@ namespace RPG.Combat
 
         void Start()
         {
+            if (gameObject.tag == "Player") m_IsPlayer = true;
+
             if (m_CurrentWeapon == null)
             {
                 EquipWeapon(m_DefaultWeapon);
@@ -79,7 +82,7 @@ namespace RPG.Combat
 
         private void TriggerAttack()
         {
-            if (m_PlaySFX)
+            if (m_PlaySFX && m_IsPlayer)
             {
                 PlayAttackSFX();
             }
