@@ -29,16 +29,25 @@ namespace RPG.Attributes
             m_Health = m_BaseStats.GetHealth();
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(GameObject attacker, float damage)
         {
             m_Health = Mathf.Max(m_Health - damage, 0);
 
             if (m_Health == 0)
             {
                 Die();
+                AwardExperience(attacker);
             }
 
             Debug.Log($"[{gameObject.name}] - Health: {m_Health}");
+        }
+
+        private void AwardExperience(GameObject attacker)
+        {
+            if(attacker.TryGetComponent(out Experience experience))
+            {
+                experience.GainExperience(m_BaseStats.GetExperienceReward());
+            }
         }
 
         public float GetHealthPercentage()

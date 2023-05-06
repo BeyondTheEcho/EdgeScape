@@ -87,11 +87,11 @@ namespace RPG.Combat
 
             if (m_CurrentWeapon.HasProjectile())
             {
-                m_CurrentWeapon.LaunchProjectile(m_RightHand, m_LeftHand, m_Target);
+                m_CurrentWeapon.LaunchProjectile(m_RightHand, m_LeftHand, m_Target, gameObject);
                 return;
             }
 
-            m_Target.TakeDamage(m_CurrentWeapon.GetWeaponDamage());
+            m_Target.TakeDamage(gameObject, m_CurrentWeapon.GetWeaponDamage());
         }
 
         //Animation Event - DON'T REMOVE

@@ -30,6 +30,7 @@ namespace RPG.Combat
         private CapsuleCollider m_CapsuleCollider = null;
         private float m_Damage = 0;
         private float m_ProjectileLifetime = 0f;
+        private GameObject m_Instigator;
 
         void Start()
         {
@@ -76,9 +77,10 @@ namespace RPG.Combat
             return m_Target.transform.position + Vector3.up * m_CapsuleCollider.height / 2;
         }
 
-        public void SetTarget(Health target, float damage)
+        public void SetTarget(Health target, GameObject instigator, float damage)
         {
             m_Target = target;
+            m_Instigator = instigator;
             m_Damage = m_Damage = damage;
         }
 
@@ -87,7 +89,7 @@ namespace RPG.Combat
             if (collider.gameObject != m_Target.gameObject) return;
             if (m_Target.IsDead()) return;
 
-            m_Target.TakeDamage(m_Damage);
+            m_Target.TakeDamage(m_Instigator, m_Damage);
 
             m_Speed = 0;
 
