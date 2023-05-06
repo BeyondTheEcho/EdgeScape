@@ -17,8 +17,22 @@ namespace RPG.Combat
         [SerializeField] private float m_WeaponRange = 1.5f;
         [SerializeField] private float m_WeaponDamage = 5.0f;
         [SerializeField] private bool m_IsRightHanded = true;
+        [SerializeField] private AudioClip[] m_Clips;
+
+        private int m_ClipIndex = 0;
 
         private const string m_WeaponName = "Weapon";
+
+        public AudioClip GetSFX()
+        {
+            if (m_ClipIndex > m_Clips.Length - 1) m_ClipIndex = 0;
+
+            var sfx = m_Clips[m_ClipIndex];
+
+            m_ClipIndex++;
+
+            return sfx;
+        }
 
         public void Spawn(Transform rHand, Transform lHand, Animator animator)
         {

@@ -25,12 +25,15 @@ namespace RPG.Combat
         private ActionScheduler m_Scheduler;
         private Animator m_Animator;
         private Weapon m_CurrentWeapon;
+        private AudioSource m_AudioSource;
+        private bool m_PlaySFX = true;
 
         void Awake()
         {
             m_Mover = GetComponent<Mover>();
             m_Scheduler = GetComponent<ActionScheduler>();
             m_Animator = GetComponent<Animator>();
+            m_AudioSource = GetComponent<AudioSource>();
         }
 
         void Start()
@@ -76,8 +79,24 @@ namespace RPG.Combat
 
         private void TriggerAttack()
         {
+            if (m_PlaySFX)
+            {
+                PlayAttackSFX();
+            }
+
+            m_PlaySFX = !m_PlaySFX;
+
             m_Animator.ResetTrigger("stopAttack");
             m_Animator.SetTrigger("attack");
+        }
+
+        private void PlayAttackSFX()
+        {
+            var sfx = m_CurrentWeapon.GetSFX();
+
+            if (sfx == null) return;
+
+            m_AudioSource.PlayOneShot(sfx);
         }
 
         //Animation Event - DON'T REMOVE
