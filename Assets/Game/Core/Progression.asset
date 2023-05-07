@@ -17,16 +17,63 @@ MonoBehaviour:
     m_Stats:
     - m_Stat: 0
       m_Levels:
-      - 50000
+      - 100
+      - 200
+      - 300
+      - 400
+      - 500
+    - m_Stat: 1
+      m_Levels:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
   - m_CharacterClass: 1
     m_Stats:
     - m_Stat: 0
       m_Levels:
-      - 5000
+      - 50
+      - 100
+      - 150
+      - 200
+      - 250
+    - m_Stat: 1
+      m_Levels:
+      - 5
+      - 10
+      - 15
+      - 20
+      - 25
   - m_CharacterClass: 2
-    m_Stats: []
+    m_Stats:
+    - m_Stat: 0
+      m_Levels:
+      - 30
+      - 60
+      - 90
+      - 120
+      - 150
+    - m_Stat: 1
+      m_Levels:
+      - 20
+      - 30
+      - 40
+      - 50
+      - 60
   - m_CharacterClass: 3
     m_Stats:
     - m_Stat: 0
       m_Levels:
-      - 5000
+      - 35
+      - 75
+      - 125
+      - 150
+      - 175
+    - m_Stat: 1
+      m_Levels:
+      - 15
+      - 25
+      - 35
+      - 45
+      - 55
