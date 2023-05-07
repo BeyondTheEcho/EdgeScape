@@ -31,6 +31,13 @@ namespace RPG.Attributes
             {
                 m_Health = m_BaseStats.GetStat(Stat.Health);
             }
+
+            m_BaseStats.a_OnLevelUp += RestoreHealth;
+        }
+
+        private void RestoreHealth()
+        {
+            m_Health = m_BaseStats.GetStat(Stat.Health);
         }
 
         public void TakeDamage(GameObject attacker, float damage)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using RPG.Attributes;
@@ -14,8 +15,9 @@ namespace RPG.Stats
         [SerializeField] private GameObject m_LevelUpParticleEffect;
 
         private int m_CurrentLevel = 0;
-
         private Experience m_Experience;
+
+        public event Action a_OnLevelUp;
 
         private void Awake()
         {
@@ -39,6 +41,7 @@ namespace RPG.Stats
             {
                 m_CurrentLevel = newLevel;
                 LevelUpEffect();
+                a_OnLevelUp.Invoke();
             }
         }
 
