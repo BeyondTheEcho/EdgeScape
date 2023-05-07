@@ -22,13 +22,13 @@ MonoBehaviour:
       - 300
       - 400
       - 500
-    - m_Stat: 1
+    - m_Stat: 2
       m_Levels:
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
+      - 15
+      - 30
+      - 50
+      - 75
+      - 100
   - m_CharacterClass: 1
     m_Stats:
     - m_Stat: 0

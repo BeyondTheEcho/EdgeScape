@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using RPG.Saving;
 using UnityEngine;
 
-namespace RPG.Attributes
+namespace RPG.Stats
 {
     public class Experience : MonoBehaviour, IJsonSaveable
     {

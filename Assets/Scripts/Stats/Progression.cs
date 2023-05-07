@@ -34,9 +34,20 @@ namespace RPG.Stats
             //[level] can be added to directly return the target float
             float[] levels = m_LookupTable[charClass][stat];
 
-            if (levels.Length < level) return 30;
+            if (levels.Length < level)
+            {
+                return 0;
+            }
 
             return levels[level - 1];
+        }
+
+        public int GetLevel(Stat stat, CharacterClass charClass)
+        {
+            BuildLookup();
+
+            float[] levels = m_LookupTable[charClass][stat];
+            return levels.Length;
         }
 
         private void BuildLookup()
