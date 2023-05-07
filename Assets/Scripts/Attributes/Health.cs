@@ -9,9 +9,9 @@ namespace RPG.Attributes
 {
     public class Health : MonoBehaviour, IJsonSaveable
     {
-        [SerializeField] private float m_Health = 100f;
         [SerializeField] private Transform m_CenterMass;
 
+        private float m_Health = -1f;
         private bool m_IsDead = false;
         private Animator m_Animator;
         private ActionScheduler m_Scheduler;
@@ -26,7 +26,11 @@ namespace RPG.Attributes
 
         void Start()
         {
-            m_Health = m_BaseStats.GetStat(Stat.Health);
+            //Prevents a race condition with the restoration from the save system
+            if (m_Health < 0)
+            {
+                m_Health = m_BaseStats.GetStat(Stat.Health);
+            }
         }
 
         public void TakeDamage(GameObject attacker, float damage)
