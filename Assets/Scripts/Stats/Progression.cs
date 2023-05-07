@@ -11,6 +11,8 @@ namespace RPG.Stats
     {
         [SerializeField] ProgressionCharacterClass[] m_CharacterClass;
 
+        private Dictionary<CharacterClass, Dictionary<Stat, float[]>> m_LookupTable = null;
+
         [System.Serializable]
         class ProgressionCharacterClass
         {
@@ -27,21 +29,33 @@ namespace RPG.Stats
 
         public float GetStat(Stat stat, CharacterClass charClass, int level)
         {
-            foreach (var progressionClass in m_CharacterClass) 
+            BuildLookup();
+
+            //[level] can be added to directly return the target float
+            float[] levels = m_LookupTable[charClass][stat];
+
+            if (levels.Length < level) return 30;
+
+            return levels[level - 1];
+        }
+
+        private void BuildLookup()
+        {
+            if (m_LookupTable != null) return;
+
+            m_LookupTable = new Dictionary<CharacterClass, Dictionary<Stat, float[]>>();
+
+            foreach (var progressionClass in m_CharacterClass)
             {
-                if (progressionClass.m_CharacterClass != charClass) continue;
+                var statLookupTable = new Dictionary<Stat, float[]>();
 
-                foreach (var progressionStat in progressionClass.m_Stats)
+                foreach (var stat in progressionClass.m_Stats)
                 {
-                    if (progressionStat.m_Stat != stat) continue;
-
-                    if(progressionStat.m_Levels.Length < level) continue;
-
-                    return progressionStat.m_Levels[level - 1];
+                    statLookupTable[stat.m_Stat] = stat.m_Levels;
                 }
-            }
 
-            return 30;
+                m_LookupTable[progressionClass.m_CharacterClass] = statLookupTable;
+            }
         }
     }
 }
