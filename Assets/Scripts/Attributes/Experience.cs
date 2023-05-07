@@ -15,6 +15,11 @@ namespace RPG.Attributes
             m_ExperiencePoints += experience;
         }
 
+        public float GetExperience()
+        {
+            return m_ExperiencePoints;
+        }
+
         public JToken CaptureAsJToken()
         {
             return JToken.FromObject(m_ExperiencePoints);
