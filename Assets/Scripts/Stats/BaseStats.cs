@@ -12,6 +12,8 @@ namespace RPG.Stats
         [SerializeField] private CharacterClass m_CharacterClass;
         [SerializeField] private Progression m_Progression;
 
+        private int m_CurrentLevel = 0;
+
         private Experience m_Experience;
 
         private void Awake()
@@ -19,11 +21,23 @@ namespace RPG.Stats
             m_Experience = GetComponent<Experience>();
         }
 
-        private void Update()
+        private void Start()
         {
-            if (gameObject.tag == "Player")
+            m_CurrentLevel = CalculateLevel();
+
+            if (m_Experience != null)
             {
-                Debug.Log($"Player Level: {GetLevel()}");
+                m_Experience.a_OnExperienceGained += UpdateLevel;
+            }
+        }
+
+        private void UpdateLevel()
+        {
+            int newLevel = CalculateLevel();
+            if (newLevel > m_CurrentLevel)
+            {
+                m_CurrentLevel = newLevel;
+                Debug.Log("Leveled Up!");
             }
         }
 
@@ -33,6 +47,17 @@ namespace RPG.Stats
         }
 
         public int GetLevel()
+        {
+            //Case protecting against race condition created by script execution order
+            if (m_CurrentLevel < 1)
+            {
+                m_CurrentLevel = CalculateLevel();
+            }
+
+            return m_CurrentLevel;
+        }
+
+        public int CalculateLevel()
         {
             if (m_Experience == null) return m_StartingLevel;
 
