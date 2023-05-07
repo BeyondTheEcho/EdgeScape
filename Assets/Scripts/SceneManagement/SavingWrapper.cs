@@ -13,9 +13,10 @@ namespace RPG.SceneManagement
         private void Awake()
         {
             m_SavingSystem = GetComponent<JsonSavingSystem>();
+            StartCoroutine(LoadLastScene());
         }
 
-        private IEnumerator Start()
+        private IEnumerator LoadLastScene()
         {
             Fader fader = FindObjectOfType<Fader>();
 

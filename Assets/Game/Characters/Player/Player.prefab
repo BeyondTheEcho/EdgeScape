@@ -99,6 +99,10 @@ PrefabInstance:
       propertyPath: m_CharacterClass
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3953974052457136941, guid: 4eed3f4aa673d1a43972404bd5199e4a, type: 3}
+      propertyPath: m_LevelUpParticleEffect
+      value: 
+      objectReference: {fileID: 4950607266222048969, guid: 2f81950fda20c92438b14d7e74b0e9dc, type: 3}
     - target: {fileID: 4517695660298269725, guid: 4eed3f4aa673d1a43972404bd5199e4a, type: 3}
       propertyPath: m_Name
       value: Player
@@ -149,6 +153,14 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!81 &4772149633170066077
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3774749760042461063}
+  m_Enabled: 1
 --- !u!114 &6364591113179432283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,14 +186,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ExperiencePoints: 0
---- !u!81 &4772149633170066077
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3774749760042461063}
-  m_Enabled: 1
 --- !u!1001 &2843729024430452458
 PrefabInstance:
   m_ObjectHideFlags: 0
