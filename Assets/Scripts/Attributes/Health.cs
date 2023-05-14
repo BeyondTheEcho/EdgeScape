@@ -50,7 +50,7 @@ namespace RPG.Attributes
                 AwardExperience(attacker);
             }
 
-            Debug.Log($"[{gameObject.name}] - Health: {m_Health}");
+            Debug.Log($"[{gameObject.name}] - Health: {m_Health} - Took {damage} damage.");
         }
 
         private void AwardExperience(GameObject attacker)

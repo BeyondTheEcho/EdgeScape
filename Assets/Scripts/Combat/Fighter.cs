@@ -6,6 +6,7 @@ using RPG.Core;
 using RPG.Saving;
 using Newtonsoft.Json.Linq;
 using RPG.Attributes;
+using RPG.Stats;
 
 namespace RPG.Combat
 {
@@ -26,6 +27,7 @@ namespace RPG.Combat
         private Animator m_Animator;
         private Weapon m_CurrentWeapon;
         private AudioSource m_AudioSource;
+        private BaseStats m_BaseStats;
         private bool m_PlaySFX = true;
         private bool m_IsPlayer = false;
 
@@ -35,6 +37,7 @@ namespace RPG.Combat
             m_Scheduler = GetComponent<ActionScheduler>();
             m_Animator = GetComponent<Animator>();
             m_AudioSource = GetComponent<AudioSource>();
+            m_BaseStats = GetComponent<BaseStats>();
         }
 
         void Start()
@@ -107,13 +110,15 @@ namespace RPG.Combat
         {
             if (m_Target == null) return;
 
+            float damage = m_BaseStats.GetStat(Stat.Damage);
+
             if (m_CurrentWeapon.HasProjectile())
             {
-                m_CurrentWeapon.LaunchProjectile(m_RightHand, m_LeftHand, m_Target, gameObject);
+                m_CurrentWeapon.LaunchProjectile(m_RightHand, m_LeftHand, m_Target, gameObject, damage);
                 return;
             }
 
-            m_Target.TakeDamage(gameObject, m_CurrentWeapon.GetWeaponDamage());
+            m_Target.TakeDamage(gameObject, damage);
         }
 
         //Animation Event - DON'T REMOVE

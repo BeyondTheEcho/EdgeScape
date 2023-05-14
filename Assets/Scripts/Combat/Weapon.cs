@@ -83,10 +83,10 @@ namespace RPG.Combat
             return m_ProjectilePrefab != null;
         }
 
-        public void LaunchProjectile(Transform rHand, Transform lHand, Health target, GameObject instigator)
+        public void LaunchProjectile(Transform rHand, Transform lHand, Health target, GameObject instigator, float calcedDamage)
         {
             Projectile projectileInst = Instantiate(m_ProjectilePrefab, GetTransform(rHand, lHand).position, Quaternion.identity);
-            projectileInst.SetTarget(target,instigator, m_WeaponDamage);
+            projectileInst.SetTarget(target,instigator, calcedDamage);
         }
 
         public float GetWeaponRange()
