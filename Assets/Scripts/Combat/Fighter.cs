@@ -7,13 +7,14 @@ using RPG.Saving;
 using Newtonsoft.Json.Linq;
 using RPG.Attributes;
 using RPG.Stats;
+using System.Collections.Generic;
 
 namespace RPG.Combat
 {
     [RequireComponent(typeof(ActionScheduler))]
     [RequireComponent(typeof(Mover))]
     [RequireComponent(typeof(Animator))]
-    public class Fighter : MonoBehaviour, IAction, IJsonSaveable
+    public class Fighter : MonoBehaviour, IAction, IJsonSaveable, IModifierProvider
     {
         [SerializeField] private float m_TimeBetweenAttacks = 1f;
         [SerializeField] private Transform m_RightHand;
@@ -159,6 +160,14 @@ namespace RPG.Combat
             m_Animator.SetTrigger("stopAttack");
         }
 
+        public IEnumerable<float> GetAdditiveModifiers(Stat stat)
+        {
+            if (stat == Stat.Damage)
+            {
+                yield return m_CurrentWeapon.GetWeaponDamage();
+            }
+        }
+
         public Health GetTarget()
         { 
             return m_Target; 
@@ -188,5 +197,6 @@ namespace RPG.Combat
             var weaponName = state.ToObject<string>();
             EquipWeapon(weaponName);
         }
+
     }
 }
