@@ -66,6 +66,18 @@ namespace RPG.Attributes
             return 100 * (m_Health / m_BaseStats.GetStat(Stat.Health));
         }
 
+        public float GetHealthPoints()
+        {
+            return m_Health;
+        }
+
+        public float GetMaxHealthPoints()
+        {
+            return GetComponent<BaseStats>().GetStat(Stat.Health);
+        }
+
+
+
         private void Die()
         {
             if (m_IsDead) return;

@@ -17,6 +17,7 @@ MonoBehaviour:
   m_ProjectilePrefab: {fileID: 6397450345934766708, guid: e29d58bb67a5c6541bb24b0da1866c2d, type: 3}
   m_WeaponRange: 20
   m_WeaponDamage: 20
+  m_WeaponPercentageBonus: 0
   m_IsRightHanded: 0
   m_Clips:
   - {fileID: 8300000, guid: b49ae130b2ed4c14db7582348629e437, type: 3}

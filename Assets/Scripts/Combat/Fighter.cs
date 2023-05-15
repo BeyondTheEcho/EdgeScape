@@ -168,6 +168,14 @@ namespace RPG.Combat
             }
         }
 
+        public IEnumerable<float> GetPercentageModifiers(Stat stat)
+        {
+            if (stat == Stat.Damage)
+            {
+                yield return m_CurrentWeapon.GetWeaponPercentageBonus();
+            }
+        }
+
         public Health GetTarget()
         { 
             return m_Target; 

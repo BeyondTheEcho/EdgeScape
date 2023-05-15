@@ -29,6 +29,13 @@ MonoBehaviour:
       - 50
       - 75
       - 100
+    - m_Stat: 3
+      m_Levels:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
   - m_CharacterClass: 1
     m_Stats:
     - m_Stat: 0
@@ -45,6 +52,13 @@ MonoBehaviour:
       - 15
       - 20
       - 25
+    - m_Stat: 3
+      m_Levels:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
   - m_CharacterClass: 2
     m_Stats:
     - m_Stat: 0
@@ -61,6 +75,13 @@ MonoBehaviour:
       - 40
       - 50
       - 60
+    - m_Stat: 3
+      m_Levels:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
   - m_CharacterClass: 3
     m_Stats:
     - m_Stat: 0
@@ -77,3 +98,10 @@ MonoBehaviour:
       - 35
       - 45
       - 55
+    - m_Stat: 3
+      m_Levels:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5

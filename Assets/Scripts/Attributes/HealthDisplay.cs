@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -18,7 +19,11 @@ namespace RPG.Attributes
 
         private void Update()
         {
-            m_Text.text = string.Format("{0:0}%", m_Health.GetHealthPercentage());
+            //Percent Health
+            //m_Text.text = string.Format("{0:0}%", m_Health.GetHealthPercentage());
+
+            //Value Health
+            m_Text.text = $"{m_Health.GetHealthPoints():0}/{m_Health.GetMaxHealthPoints():0}";
         }
     }
 }

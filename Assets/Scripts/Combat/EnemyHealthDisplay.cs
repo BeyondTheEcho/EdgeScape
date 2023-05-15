@@ -1,4 +1,5 @@
 using RPG.Attributes;
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -20,8 +21,12 @@ namespace RPG.Combat
 
             if (enemyHealth != null) 
             {
-                float enemyHealthValue = enemyHealth.GetHealthPercentage();
-                m_Text.text = string.Format("{0:0}%", enemyHealthValue);
+                //Enemy Percent Health
+                //float enemyHealthValue = enemyHealth.GetHealthPercentage();
+                //m_Text.text = string.Format("{0:0}%", enemyHealthValue);
+
+                //Enemy Value Health
+                m_Text.text = $"{enemyHealth.GetHealthPoints():0}/{enemyHealth.GetMaxHealthPoints():0}";
             }
             else
             {

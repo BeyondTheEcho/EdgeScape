@@ -16,6 +16,7 @@ namespace RPG.Combat
         //Weapon Stats
         [SerializeField] private float m_WeaponRange = 1.5f;
         [SerializeField] private float m_WeaponDamage = 5.0f;
+        [SerializeField] private float m_WeaponPercentageBonus = 0f;
         [SerializeField] private bool m_IsRightHanded = true;
         [SerializeField] private AudioClip[] m_Clips;
 
@@ -97,6 +98,11 @@ namespace RPG.Combat
         public float GetWeaponDamage()
         {
             return m_WeaponDamage;
+        }
+
+        public float GetWeaponPercentageBonus()
+        {
+            return m_WeaponPercentageBonus;
         }
     }
 }
