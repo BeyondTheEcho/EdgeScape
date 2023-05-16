@@ -3,7 +3,7 @@ using RPG.Saving;
 using RPG.Stats;
 using RPG.Core;
 using UnityEngine;
-
+using GameDevTV.Utils;
 
 namespace RPG.Attributes
 {
@@ -11,7 +11,7 @@ namespace RPG.Attributes
     {
         [SerializeField] private Transform m_CenterMass;
 
-        private float m_Health = -1f;
+        private LazyValue<float> m_Health;
         private bool m_IsDead = false;
         private Animator m_Animator;
         private ActionScheduler m_Scheduler;
@@ -22,35 +22,36 @@ namespace RPG.Attributes
             m_Animator = GetComponent<Animator>();
             m_Scheduler = GetComponent<ActionScheduler>();
             m_BaseStats = GetComponent<BaseStats>();
+            m_Health = new LazyValue<float>(GetInitialHealth);
         }
 
         void Start()
         {
-            //Prevents a race condition with the restoration from the save system
-            if (m_Health < 0)
-            {
-                m_Health = m_BaseStats.GetStat(Stat.Health);
-            }
-
+            m_Health.ForceInit();
             m_BaseStats.a_OnLevelUp += RestoreHealth;
+        }
+
+        private float GetInitialHealth()
+        {
+            return m_BaseStats.GetStat(Stat.Health);
         }
 
         private void RestoreHealth()
         {
-            m_Health = m_BaseStats.GetStat(Stat.Health);
+            m_Health.value = m_BaseStats.GetStat(Stat.Health);
         }
 
         public void TakeDamage(GameObject attacker, float damage)
         {
-            m_Health = Mathf.Max(m_Health - damage, 0);
+            m_Health.value = Mathf.Max(m_Health.value - damage, 0);
 
-            if (m_Health == 0)
+            if (m_Health.value == 0)
             {
                 Die();
                 AwardExperience(attacker);
             }
 
-            Debug.Log($"[{gameObject.name}] - Health: {m_Health} - Took {damage} damage.");
+            Debug.Log($"[{gameObject.name}] - Health: {m_Health.value} - Took {damage} damage.");
         }
 
         private void AwardExperience(GameObject attacker)
@@ -63,12 +64,12 @@ namespace RPG.Attributes
 
         public float GetHealthPercentage()
         {
-            return 100 * (m_Health / m_BaseStats.GetStat(Stat.Health));
+            return 100 * (m_Health.value / m_BaseStats.GetStat(Stat.Health));
         }
 
         public float GetHealthPoints()
         {
-            return m_Health;
+            return m_Health.value;
         }
 
         public float GetMaxHealthPoints()
@@ -99,14 +100,14 @@ namespace RPG.Attributes
 
         public JToken CaptureAsJToken()
         {
-            return JToken.FromObject(m_Health);
+            return JToken.FromObject(m_Health.value);
         }
 
         public void RestoreFromJToken(JToken state)
         {
-            m_Health = state.ToObject<float>();
+            m_Health.value = state.ToObject<float>();
 
-            if (m_Health <= 0)
+            if (m_Health.value <= 0)
             {
                 Die();
             }

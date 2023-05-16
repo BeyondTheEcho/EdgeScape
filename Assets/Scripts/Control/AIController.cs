@@ -5,6 +5,7 @@ using RPG.Combat;
 using RPG.Core;
 using RPG.Movement;
 using RPG.Attributes;
+using GameDevTV.Utils;
 
 namespace RPG.Control
 {
@@ -23,7 +24,7 @@ namespace RPG.Control
         private Fighter m_Fighter;
         private Health m_Health;
         private Mover m_Mover;
-        private Vector3 m_GuardPosition;
+        private LazyValue<Vector3> m_GuardPosition;
         private Vector3 m_LastKnownPlayerPosition;
         private float m_TimeSincePlayerLastSeen = Mathf.Infinity;
         private float m_TimeSinceArrivedAtWaypoint = Mathf.Infinity;
@@ -35,11 +36,12 @@ namespace RPG.Control
             m_Health = GetComponent<Health>();
             m_Mover = GetComponent<Mover>();
             m_Scheduler = GetComponent<ActionScheduler>();
+            m_GuardPosition = new LazyValue<Vector3>(GetGuardPosition);
         }
 
         private void Start()
         {
-            m_GuardPosition = transform.position;
+            m_GuardPosition.ForceInit();
             m_Player = GameObject.FindWithTag("Player");
         }
 
@@ -63,6 +65,11 @@ namespace RPG.Control
             UpdateTimers();
         }
 
+        private Vector3 GetGuardPosition()
+        {
+            return transform.position;
+        }
+
         private void UpdateTimers()
         {
             m_TimeSincePlayerLastSeen += Time.deltaTime;
@@ -71,7 +78,7 @@ namespace RPG.Control
 
         private void PatrolBehaviour()
         {
-            Vector3 nextPosition = m_GuardPosition;
+            Vector3 nextPosition = m_GuardPosition.value;
 
             if (m_PatrolPath != null)
             {

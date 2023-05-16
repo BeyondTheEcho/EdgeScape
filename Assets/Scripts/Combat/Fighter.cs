@@ -8,6 +8,8 @@ using Newtonsoft.Json.Linq;
 using RPG.Attributes;
 using RPG.Stats;
 using System.Collections.Generic;
+using GameDevTV.Utils;
+using System;
 
 namespace RPG.Combat
 {
@@ -26,7 +28,7 @@ namespace RPG.Combat
         private Mover m_Mover;
         private ActionScheduler m_Scheduler;
         private Animator m_Animator;
-        private Weapon m_CurrentWeapon;
+        private LazyValue<Weapon> m_CurrentWeapon;
         private AudioSource m_AudioSource;
         private BaseStats m_BaseStats;
         private bool m_PlaySFX = true;
@@ -39,16 +41,20 @@ namespace RPG.Combat
             m_Animator = GetComponent<Animator>();
             m_AudioSource = GetComponent<AudioSource>();
             m_BaseStats = GetComponent<BaseStats>();
+            m_CurrentWeapon = new LazyValue<Weapon>(SetupDefaultWeapon);
+        }
+
+        private Weapon SetupDefaultWeapon()
+        {
+            AttachWeapon(m_DefaultWeapon);
+            return m_DefaultWeapon;
         }
 
         void Start()
         {
             if (gameObject.tag == "Player") m_IsPlayer = true;
 
-            if (m_CurrentWeapon == null)
-            {
-                EquipWeapon(m_DefaultWeapon);
-            }
+            m_CurrentWeapon.ForceInit();
         }
 
         private void Update()
@@ -99,7 +105,7 @@ namespace RPG.Combat
 
         private void PlayAttackSFX()
         {
-            var sfx = m_CurrentWeapon.GetSFX();
+            var sfx = m_CurrentWeapon.value.GetSFX();
 
             if (sfx == null) return;
 
@@ -113,9 +119,9 @@ namespace RPG.Combat
 
             float damage = m_BaseStats.GetStat(Stat.Damage);
 
-            if (m_CurrentWeapon.HasProjectile())
+            if (m_CurrentWeapon.value.HasProjectile())
             {
-                m_CurrentWeapon.LaunchProjectile(m_RightHand, m_LeftHand, m_Target, gameObject, damage);
+                m_CurrentWeapon.value.LaunchProjectile(m_RightHand, m_LeftHand, m_Target, gameObject, damage);
                 return;
             }
 
@@ -130,7 +136,7 @@ namespace RPG.Combat
 
         private bool GetIsInRange()
         {
-            bool isInRange = Vector3.Distance(transform.position, m_Target.transform.position) < m_CurrentWeapon.GetWeaponRange();
+            bool isInRange = Vector3.Distance(transform.position, m_Target.transform.position) < m_CurrentWeapon.value.GetWeaponRange();
             return isInRange;
         }
 
@@ -164,7 +170,7 @@ namespace RPG.Combat
         {
             if (stat == Stat.Damage)
             {
-                yield return m_CurrentWeapon.GetWeaponDamage();
+                yield return m_CurrentWeapon.value.GetWeaponDamage();
             }
         }
 
@@ -172,7 +178,7 @@ namespace RPG.Combat
         {
             if (stat == Stat.Damage)
             {
-                yield return m_CurrentWeapon.GetWeaponPercentageBonus();
+                yield return m_CurrentWeapon.value.GetWeaponPercentageBonus();
             }
         }
 
@@ -183,21 +189,26 @@ namespace RPG.Combat
 
         public void EquipWeapon(Weapon weapon)
         {
-            m_CurrentWeapon = weapon;
-            m_CurrentWeapon.Spawn(m_RightHand, m_LeftHand, m_Animator);
+            m_CurrentWeapon.value = weapon;
+            AttachWeapon(weapon);
+        }
+
+        private void AttachWeapon(Weapon weapon)
+        {
+            weapon.Spawn(m_RightHand, m_LeftHand, m_Animator);
         }
 
         public void EquipWeapon(string weaponName)
         {
             Weapon weapon = Resources.Load<Weapon>(weaponName);
 
-            m_CurrentWeapon = weapon;
-            m_CurrentWeapon.Spawn(m_RightHand, m_LeftHand, m_Animator);
+            m_CurrentWeapon.value = weapon;
+            m_CurrentWeapon.value.Spawn(m_RightHand, m_LeftHand, m_Animator);
         }
 
         public JToken CaptureAsJToken()
         {
-            return JToken.FromObject(m_CurrentWeapon.name);
+            return JToken.FromObject(m_CurrentWeapon.value.name);
         }
 
         public void RestoreFromJToken(JToken state)

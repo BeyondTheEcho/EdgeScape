@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using GameDevTV.Utils;
 using RPG.Attributes;
 using UnityEditorInternal;
 using UnityEngine;
@@ -15,7 +16,7 @@ namespace RPG.Stats
         [SerializeField] private GameObject m_LevelUpParticleEffect;
         [SerializeField] private bool m_ShouldUseModifiers = false;
 
-        private int m_CurrentLevel = 0;
+        private LazyValue<int> m_CurrentLevel;
         private Experience m_Experience;
 
         public event Action a_OnLevelUp;
@@ -23,6 +24,7 @@ namespace RPG.Stats
         private void Awake()
         {
             m_Experience = GetComponent<Experience>();
+            m_CurrentLevel = new LazyValue<int>(CalculateLevel);
         }
 
         private void OnEnable()
@@ -43,15 +45,15 @@ namespace RPG.Stats
 
         private void Start()
         {
-            m_CurrentLevel = CalculateLevel();
+            m_CurrentLevel.ForceInit();
         }
 
         private void UpdateLevel()
         {
             int newLevel = CalculateLevel();
-            if (newLevel > m_CurrentLevel)
+            if (newLevel > m_CurrentLevel.value)
             {
-                m_CurrentLevel = newLevel;
+                m_CurrentLevel.value = newLevel;
                 LevelUpEffect();
                 a_OnLevelUp.Invoke();
             }
@@ -109,13 +111,7 @@ namespace RPG.Stats
 
         public int GetLevel()
         {
-            //Case protecting against race condition created by script execution order
-            if (m_CurrentLevel < 1)
-            {
-                m_CurrentLevel = CalculateLevel();
-            }
-
-            return m_CurrentLevel;
+            return m_CurrentLevel.value;
         }
 
         public int CalculateLevel()
