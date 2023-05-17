@@ -5,6 +5,7 @@ using RPG.Movement;
 using RPG.Combat;
 using RPG.Attributes;
 using System;
+using UnityEngine.EventSystems;
 
 namespace RPG.Control
 {
@@ -22,7 +23,8 @@ namespace RPG.Control
         {
             None,
             Movement,
-            Combat
+            Combat,
+            UI
         }
 
         [System.Serializable]
@@ -44,11 +46,30 @@ namespace RPG.Control
         // Update is called once per frame
         void Update()
         {
-            if (m_Health.IsDead()) return;
+            if (InteractWithUI()) return;
+
+            if (m_Health.IsDead())
+            {
+                SetCursor(CursorType.None);
+                return;
+            }
+
             if (InteractWithCombat()) return;
             if (InteractWithMovement()) return;
             
             SetCursor(CursorType.None);
+        }
+
+        private bool InteractWithUI()
+        {
+            //Returns true if cursor is over UI gameobjects only
+            if(EventSystem.current.IsPointerOverGameObject())
+            {
+                SetCursor(CursorType.UI);
+                return true;
+            }
+
+            return false;
         }
 
         private bool InteractWithCombat()
