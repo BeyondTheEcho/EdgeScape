@@ -13,20 +13,20 @@ namespace RPG.Control
     [RequireComponent(typeof(Fighter))]
     public class PlayerController : MonoBehaviour
     {
+        //Array of Cursor Mappings
         [SerializeField] private CursorMapping[] m_CursorMappings;
 
+        //Component Refs
         private Mover m_Mover;
         private Fighter m_Fighter;
         private Health m_Health;
 
-        enum CursorType
-        {
-            None,
-            Movement,
-            Combat,
-            UI
-        }
+        //Constants
+        private const float c_MaxSpeed = 1f; //Val MUST be 1f
+        private const int c_LeftMouseButton = 0;
 
+
+        //Cursor Mapping Struct
         [System.Serializable]
         struct CursorMapping
         {
@@ -54,10 +54,31 @@ namespace RPG.Control
                 return;
             }
 
-            if (InteractWithCombat()) return;
+            if (InteractWithComponent()) return;
             if (InteractWithMovement()) return;
             
             SetCursor(CursorType.None);
+        }
+
+        private bool InteractWithComponent()
+        {
+            RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
+
+            foreach (RaycastHit hit in hits)
+            {
+                IRaycastable[] raycastable = hit.transform.GetComponents<IRaycastable>();
+
+                foreach (IRaycastable castable in raycastable)
+                {
+                    if (castable.HandleRaycast(this))
+                    {
+                        SetCursor(castable.GetCursorType());
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         private bool InteractWithUI()
@@ -72,38 +93,13 @@ namespace RPG.Control
             return false;
         }
 
-        private bool InteractWithCombat()
-        {
-            RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
-            
-            foreach (RaycastHit hit in hits) 
-            {
-                if (hit.transform.gameObject.TryGetComponent(out CombatTarget target))
-                {
-                    Fighter fighter = target.gameObject.GetComponent<Fighter>();
-
-                    if (!fighter.CanAttack(target.gameObject)) continue;
-
-                    if (Input.GetMouseButton(0))
-                    {
-                        m_Fighter.Attack(target.gameObject);                       
-                    }
-
-                    SetCursor(CursorType.Combat);
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         private bool InteractWithMovement()
         {
             if (Physics.Raycast(GetMouseRay(), out RaycastHit hit))
             { 
-                if (Input.GetMouseButton(0))
+                if (Input.GetMouseButton(c_LeftMouseButton))
                 {
-                    m_Mover.StartMoveAction(hit.point, 1f);
+                    m_Mover.StartMoveAction(hit.point, c_MaxSpeed);
                 }
 
                 SetCursor(CursorType.Movement);
@@ -111,6 +107,11 @@ namespace RPG.Control
             }
 
             return false;
+        }
+
+        public void MoveToDestination(Vector3 position)
+        {
+            m_Mover.StartMoveAction(position, c_MaxSpeed);
         }
 
         private void SetCursor(CursorType type)
