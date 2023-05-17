@@ -7,6 +7,7 @@ using RPG.Attributes;
 using System;
 using UnityEngine.EventSystems;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 namespace RPG.Control
 {
@@ -16,6 +17,7 @@ namespace RPG.Control
     {
         //Config
         [SerializeField] private float m_MaxNavMeshProjectionDistance = 1f;
+        [SerializeField] private float m_MaxNavPathLength = 40f;
 
         //Array of Cursor Mappings
         [SerializeField] private CursorMapping[] m_CursorMappings;
@@ -120,13 +122,31 @@ namespace RPG.Control
 
             if (!Physics.Raycast(GetMouseRay(), out RaycastHit hit)) return false;
 
-            if (NavMesh.SamplePosition(hit.point, out NavMeshHit navMeshHit, m_MaxNavMeshProjectionDistance, NavMesh.AllAreas))
+            if (!NavMesh.SamplePosition(hit.point, out NavMeshHit navMeshHit, m_MaxNavMeshProjectionDistance, NavMesh.AllAreas)) return false;
+
+            position = navMeshHit.position;
+
+            //Path is being populated when passed into Calculate Path (Read shitty out variable)
+            NavMeshPath path = new NavMeshPath();
+            if (!NavMesh.CalculatePath(transform.position, position, NavMesh.AllAreas, path)) return false;
+            if (path.status != NavMeshPathStatus.PathComplete) return false;
+            if (GetPathLength(path) > m_MaxNavPathLength) return false;
+
+            return true;
+        }
+
+        private float GetPathLength(NavMeshPath path)
+        {
+            float total = 0;
+
+            if (path.corners.Length < 2) return total;
+
+            for (int i = 0; i < path.corners.Length - 1; i++) 
             {
-                position = navMeshHit.position;
-                return true;
+                total += Vector3.Distance(path.corners[i], path.corners[i + 1]);
             }
-            
-            return false;
+
+            return total;
         }
 
         RaycastHit[] RaycastAllSorted()
@@ -152,7 +172,7 @@ namespace RPG.Control
         private void SetCursor(CursorType type)
         {
             CursorMapping mapping = GetCursorMapping(type);
-            Cursor.SetCursor(mapping.m_Texture, mapping.m_Hotspot, CursorMode.Auto);
+            UnityEngine.Cursor.SetCursor(mapping.m_Texture, mapping.m_Hotspot, CursorMode.Auto);
         }
 
         private CursorMapping GetCursorMapping(CursorType type) 
