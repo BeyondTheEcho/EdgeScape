@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 7264728368925329391}
   - component: {fileID: 1592671595397222511}
   - component: {fileID: 5609272047332298217}
-  - component: {fileID: 2004681409374709159}
   - component: {fileID: 4408147585918913584}
   - component: {fileID: 9192150184723678101}
   - component: {fileID: 4819006488076308193}
+  - component: {fileID: 2057343339717486715}
   m_Layer: 5
   m_Name: Damaga Text
   m_TagString: Untagged
@@ -105,18 +105,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &2004681409374709159
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3157029745958709308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f88b305db1b8d8f4c88ae21c61c227c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!111 &4408147585918913584
 Animation:
   m_ObjectHideFlags: 0
@@ -157,6 +145,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e7ae9d7bbc738f41a319ba720365ed0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2057343339717486715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3157029745958709308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88b305db1b8d8f4c88ae21c61c227c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UseLookAtRotation: 0
 --- !u!1 &9002814319807546946
 GameObject:
   m_ObjectHideFlags: 0

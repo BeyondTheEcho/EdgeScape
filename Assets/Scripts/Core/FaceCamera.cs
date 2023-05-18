@@ -6,9 +6,18 @@ namespace RPG.Core
 {
     public class FaceCamera : MonoBehaviour
     {
-        void Update()
+        [SerializeField] private bool m_UseLookAtRotation = true;
+
+        void LateUpdate()
         {
-            transform.forward = Camera.main.transform.forward;
+            if (m_UseLookAtRotation)
+            {
+                transform.LookAt(Camera.main.transform.position);
+            }
+            else
+            {
+                transform.forward = Camera.main.transform.forward;
+            }
         }
     }
 }
