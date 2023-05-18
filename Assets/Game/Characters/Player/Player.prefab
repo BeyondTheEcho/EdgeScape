@@ -115,6 +115,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5337911217752013842, guid: 4eed3f4aa673d1a43972404bd5199e4a, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5337911217752013842, guid: 4eed3f4aa673d1a43972404bd5199e4a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.975
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4eed3f4aa673d1a43972404bd5199e4a, type: 3}
 --- !u!4 &1784050461029784751 stripped
@@ -177,6 +185,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717b78d49be23864d9c6b2d413081d03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_MaxNavMeshProjectionDistance: 1
+  m_MaxNavPathLength: 40
   m_CursorMappings:
   - m_Type: 0
     m_Texture: {fileID: 2800000, guid: 21628736160fcc9488493401da3ef621, type: 3}
