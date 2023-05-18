@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f88b305db1b8d8f4c88ae21c61c227c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_UseLookAtRotation: 1
 --- !u!114 &7480580776779314033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,6 +61,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HealthBar: {fileID: 5303855861233762866}
   m_Health: {fileID: 0}
+  m_RootCanvas: {fileID: 3908568731091494969}
 --- !u!1 &1596978872219094023
 GameObject:
   m_ObjectHideFlags: 0
