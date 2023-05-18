@@ -11,7 +11,7 @@ namespace RPG.Attributes
     public class Health : MonoBehaviour, IJsonSaveable
     {
         [SerializeField] private Transform m_CenterMass;
-        [SerializeField] private UnityEvent a_TakeDamage;
+        [SerializeField] private UnityEvent<float> a_TakeDamage;
 
         private LazyValue<float> m_Health;
         private bool m_IsDead = false;
@@ -47,7 +47,7 @@ namespace RPG.Attributes
         {
             m_Health.value = Mathf.Max(m_Health.value - damage, 0);
 
-            a_TakeDamage.Invoke();
+            a_TakeDamage.Invoke(damage);
 
             if (m_Health.value == 0)
             {
