@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2004681409374709159}
   - component: {fileID: 4408147585918913584}
   - component: {fileID: 9192150184723678101}
+  - component: {fileID: 4819006488076308193}
   m_Layer: 5
   m_Name: Damaga Text
   m_TagString: Untagged
@@ -144,6 +145,18 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &4819006488076308193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3157029745958709308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e7ae9d7bbc738f41a319ba720365ed0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9002814319807546946
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,12 +4,14 @@ using RPG.Stats;
 using RPG.Core;
 using UnityEngine;
 using GameDevTV.Utils;
+using UnityEngine.Events;
 
 namespace RPG.Attributes
 {
     public class Health : MonoBehaviour, IJsonSaveable
     {
         [SerializeField] private Transform m_CenterMass;
+        [SerializeField] private UnityEvent a_TakeDamage;
 
         private LazyValue<float> m_Health;
         private bool m_IsDead = false;
@@ -44,6 +46,8 @@ namespace RPG.Attributes
         public void TakeDamage(GameObject attacker, float damage)
         {
             m_Health.value = Mathf.Max(m_Health.value - damage, 0);
+
+            a_TakeDamage.Invoke();
 
             if (m_Health.value == 0)
             {
