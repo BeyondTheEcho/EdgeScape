@@ -26,6 +26,8 @@ namespace RPG.Combat
 
         public AudioClip GetSFX()
         {
+            if (m_Clips.Length == 0) return null;
+
             if (m_ClipIndex > m_Clips.Length - 1) m_ClipIndex = 0;
 
             var sfx = m_Clips[m_ClipIndex];

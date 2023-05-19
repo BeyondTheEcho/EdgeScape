@@ -4,10 +4,11 @@ using RPG.Saving;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.AI;
+using RPG.Control;
 
 namespace RPG.SceneManagement
 {
-    public class Portal : MonoBehaviour
+    public class Portal : MonoBehaviour, IRaycastable
     {
         [SerializeField] private int m_SceneToLoad = -1;
         [SerializeField] public Transform m_SpawnPoint;
@@ -35,26 +36,37 @@ namespace RPG.SceneManagement
         {
             if (m_SceneToLoad < 0)
             {
-                Debug.LogError("Invalid SceneToLoad");
+                Debug.LogError("Scene to load not set.");
                 yield break;
             }
 
-            Fader fader = FindObjectOfType<Fader>();
             DontDestroyOnLoad(gameObject);
 
-            yield return StartCoroutine(fader.FadeOut(m_FadeOutTime));
-            m_SavingWrapper.Save();
+            Fader fader = FindObjectOfType<Fader>();
+            SavingWrapper savingWrapper = FindObjectOfType<SavingWrapper>();
+            PlayerController playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+            playerController.enabled = false;
+
+            yield return fader.FadeOut(m_FadeOutTime);
+
+            savingWrapper.Save();
+
             yield return SceneManager.LoadSceneAsync(m_SceneToLoad);
-            m_SavingWrapper.Load();
+            PlayerController newPlayerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+            newPlayerController.enabled = false;
 
-            Portal destination = GetOtherPortal();
-            UpdatePlayer(destination);
 
-            m_SavingWrapper.Save();
+            savingWrapper.Load();
+
+            Portal otherPortal = GetOtherPortal();
+            UpdatePlayer(otherPortal);
+
+            savingWrapper.Save();
 
             yield return new WaitForSeconds(m_PauseBetweenFades);
-            yield return StartCoroutine(fader.FadeIn(m_FadeInTime));
+            fader.FadeIn(m_FadeInTime);
 
+            newPlayerController.enabled = true;
             Destroy(gameObject);
         }
 
@@ -72,10 +84,13 @@ namespace RPG.SceneManagement
             return null;
         }
 
-        private void UpdatePlayer(Portal destination)
+        private void UpdatePlayer(Portal otherPortal)
         {
-            var player = GameObject.FindWithTag("Player").GetComponent<NavMeshAgent>();
-            player.Warp(destination.m_SpawnPoint.position);
+            GameObject player = GameObject.FindWithTag("Player");
+            player.GetComponent<NavMeshAgent>().enabled = false;
+            player.transform.position = otherPortal.m_SpawnPoint.position;
+            player.transform.rotation = otherPortal.m_SpawnPoint.rotation;
+            player.GetComponent<NavMeshAgent>().enabled = true;
         }
 
         public enum PortalID
@@ -85,6 +100,21 @@ namespace RPG.SceneManagement
             Charlie,
             Delta,
             Echo
+        }
+
+        public CursorType GetCursorType()
+        {
+            return CursorType.Portal;
+        }
+
+        public bool HandleRaycast(PlayerController playerController)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                playerController.MoveToDestination(transform.position);
+            }
+
+            return true;
         }
     }
 }
