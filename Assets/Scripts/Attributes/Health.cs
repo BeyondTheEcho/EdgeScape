@@ -12,6 +12,7 @@ namespace RPG.Attributes
     {
         [SerializeField] private Transform m_CenterMass;
         [SerializeField] private UnityEvent<float> a_TakeDamage;
+        [SerializeField] private UnityEvent a_OnDie;
 
         private LazyValue<float> m_Health;
         private bool m_IsDead = false;
@@ -86,14 +87,16 @@ namespace RPG.Attributes
             return GetComponent<BaseStats>().GetStat(Stat.Health);
         }
 
-
-
         private void Die()
         {
             if (m_IsDead) return;
 
+
             m_IsDead = true;
             m_Animator.SetTrigger("death");
+            
+            a_OnDie.Invoke();
+
             m_Scheduler.CancelCurrentAction();
         }
 

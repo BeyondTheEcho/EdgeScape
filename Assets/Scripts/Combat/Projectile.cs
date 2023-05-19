@@ -4,6 +4,7 @@ using Cinemachine;
 using RPG.Attributes;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace RPG.Combat
 {
@@ -26,6 +27,10 @@ namespace RPG.Combat
         [SerializeField] private GameObject[] m_EffectsToDestroyOnImpale;
         [SerializeField] private float m_LifetimeAfterImpale = 5f;
 
+        [Header("Event Settings")] 
+        [SerializeField] private UnityEvent a_OnLaunch;
+        [SerializeField] private UnityEvent a_OnHit;
+
         private Health m_Target;
         private CapsuleCollider m_CapsuleCollider = null;
         private float m_Damage = 0;
@@ -35,6 +40,7 @@ namespace RPG.Combat
         void Start()
         {
             transform.LookAt(GetAimLocation());
+            a_OnLaunch.Invoke();
         }
 
         // Update is called once per frame
@@ -90,6 +96,8 @@ namespace RPG.Combat
             if (m_Target.IsDead()) return;
 
             m_Target.TakeDamage(m_Instigator, m_Damage);
+
+            a_OnHit.Invoke();
 
             m_Speed = 0;
 
