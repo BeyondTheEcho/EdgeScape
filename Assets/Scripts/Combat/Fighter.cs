@@ -21,14 +21,14 @@ namespace RPG.Combat
         [SerializeField] private float m_TimeBetweenAttacks = 1f;
         [SerializeField] private Transform m_RightHand;
         [SerializeField] private Transform m_LeftHand;
-        [SerializeField] private Weapon m_DefaultWeapon;
+        [SerializeField] private WeaponConfig m_DefaultWeapon;
 
         private float m_TimeSinceLastAttack = Mathf.Infinity;
         private Health m_Target;
         private Mover m_Mover;
         private ActionScheduler m_Scheduler;
         private Animator m_Animator;
-        private LazyValue<Weapon> m_CurrentWeapon;
+        private LazyValue<WeaponConfig> m_CurrentWeapon;
         private AudioSource m_AudioSource;
         private BaseStats m_BaseStats;
         private bool m_PlaySFX = true;
@@ -41,10 +41,10 @@ namespace RPG.Combat
             m_Animator = GetComponent<Animator>();
             m_AudioSource = GetComponent<AudioSource>();
             m_BaseStats = GetComponent<BaseStats>();
-            m_CurrentWeapon = new LazyValue<Weapon>(SetupDefaultWeapon);
+            m_CurrentWeapon = new LazyValue<WeaponConfig>(SetupDefaultWeapon);
         }
 
-        private Weapon SetupDefaultWeapon()
+        private WeaponConfig SetupDefaultWeapon()
         {
             AttachWeapon(m_DefaultWeapon);
             return m_DefaultWeapon;
@@ -187,20 +187,20 @@ namespace RPG.Combat
             return m_Target; 
         }
 
-        public void EquipWeapon(Weapon weapon)
+        public void EquipWeapon(WeaponConfig weapon)
         {
             m_CurrentWeapon.value = weapon;
             AttachWeapon(weapon);
         }
 
-        private void AttachWeapon(Weapon weapon)
+        private void AttachWeapon(WeaponConfig weapon)
         {
             weapon.Spawn(m_RightHand, m_LeftHand, m_Animator);
         }
 
         public void EquipWeapon(string weaponName)
         {
-            Weapon weapon = Resources.Load<Weapon>(weaponName);
+            WeaponConfig weapon = Resources.Load<WeaponConfig>(weaponName);
 
             m_CurrentWeapon.value = weapon;
             m_CurrentWeapon.value.Spawn(m_RightHand, m_LeftHand, m_Animator);
