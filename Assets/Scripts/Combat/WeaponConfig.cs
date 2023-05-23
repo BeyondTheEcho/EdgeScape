@@ -37,14 +37,16 @@ namespace RPG.Combat
             return sfx;
         }
 
-        public void Spawn(Transform rHand, Transform lHand, Animator animator)
+        public Weapon Spawn(Transform rHand, Transform lHand, Animator animator)
         {
             DestroyOldWeapon(rHand, lHand);
+
+            Weapon weapon = null;
 
             if (m_WeaponPrefab != null)
             {
                 Transform spawnPos = GetTransform(rHand, lHand);
-                Weapon weapon = Instantiate(m_WeaponPrefab, spawnPos);
+                weapon = Instantiate(m_WeaponPrefab, spawnPos);
                 weapon.gameObject.name = m_WeaponName;
             }
 
@@ -58,6 +60,8 @@ namespace RPG.Combat
             {
                 animator.runtimeAnimatorController = overrideController.runtimeAnimatorController;
             }
+
+            return weapon;
         }
 
         private void DestroyOldWeapon(Transform rHand, Transform lHand)

@@ -28,11 +28,13 @@ namespace RPG.Combat
         private Mover m_Mover;
         private ActionScheduler m_Scheduler;
         private Animator m_Animator;
-        private LazyValue<WeaponConfig> m_CurrentWeapon;
+        WeaponConfig m_CurrentWeaponConfig;
         private AudioSource m_AudioSource;
         private BaseStats m_BaseStats;
         private bool m_PlaySFX = true;
         private bool m_IsPlayer = false;
+        private LazyValue<Weapon> m_CurrentWeapon;
+  
 
         void Awake()
         {
@@ -41,20 +43,20 @@ namespace RPG.Combat
             m_Animator = GetComponent<Animator>();
             m_AudioSource = GetComponent<AudioSource>();
             m_BaseStats = GetComponent<BaseStats>();
-            m_CurrentWeapon = new LazyValue<WeaponConfig>(SetupDefaultWeapon);
+            m_CurrentWeapon = new LazyValue<Weapon>(SetupDefaultWeapon);
+            m_CurrentWeaponConfig = m_DefaultWeapon;
         }
 
-        private WeaponConfig SetupDefaultWeapon()
+        private Weapon SetupDefaultWeapon()
         {
-            AttachWeapon(m_DefaultWeapon);
-            return m_DefaultWeapon;
+            return AttachWeapon(m_DefaultWeapon);
         }
 
         void Start()
         {
             if (gameObject.tag == "Player") m_IsPlayer = true;
 
-            m_CurrentWeapon.ForceInit();
+            AttachWeapon(m_CurrentWeaponConfig);
         }
 
         private void Update()
@@ -105,7 +107,7 @@ namespace RPG.Combat
 
         private void PlayAttackSFX()
         {
-            var sfx = m_CurrentWeapon.value.GetSFX();
+            var sfx = m_CurrentWeaponConfig.GetSFX();
 
             if (sfx == null) return;
 
@@ -119,9 +121,14 @@ namespace RPG.Combat
 
             float damage = m_BaseStats.GetStat(Stat.Damage);
 
-            if (m_CurrentWeapon.value.HasProjectile())
+            if (m_CurrentWeapon.value != null)
             {
-                m_CurrentWeapon.value.LaunchProjectile(m_RightHand, m_LeftHand, m_Target, gameObject, damage);
+                m_CurrentWeapon.value.OnHit();
+            }
+
+            if (m_CurrentWeaponConfig.HasProjectile())
+            {
+                m_CurrentWeaponConfig.LaunchProjectile(m_RightHand, m_LeftHand, m_Target, gameObject, damage);
                 return;
             }
 
@@ -136,7 +143,7 @@ namespace RPG.Combat
 
         private bool GetIsInRange()
         {
-            bool isInRange = Vector3.Distance(transform.position, m_Target.transform.position) < m_CurrentWeapon.value.GetWeaponRange();
+            bool isInRange = Vector3.Distance(transform.position, m_Target.transform.position) < m_CurrentWeaponConfig.GetWeaponRange();
             return isInRange;
         }
 
@@ -170,7 +177,7 @@ namespace RPG.Combat
         {
             if (stat == Stat.Damage)
             {
-                yield return m_CurrentWeapon.value.GetWeaponDamage();
+                yield return m_CurrentWeaponConfig.GetWeaponDamage();
             }
         }
 
@@ -178,7 +185,7 @@ namespace RPG.Combat
         {
             if (stat == Stat.Damage)
             {
-                yield return m_CurrentWeapon.value.GetWeaponPercentageBonus();
+                yield return m_CurrentWeaponConfig.GetWeaponPercentageBonus();
             }
         }
 
@@ -189,26 +196,26 @@ namespace RPG.Combat
 
         public void EquipWeapon(WeaponConfig weapon)
         {
-            m_CurrentWeapon.value = weapon;
-            AttachWeapon(weapon);
+            m_CurrentWeaponConfig = weapon;
+            m_CurrentWeapon.value = AttachWeapon(weapon);
         }
 
-        private void AttachWeapon(WeaponConfig weapon)
+        private Weapon AttachWeapon(WeaponConfig weapon)
         {
-            weapon.Spawn(m_RightHand, m_LeftHand, m_Animator);
+            return weapon.Spawn(m_RightHand, m_LeftHand, m_Animator);
         }
 
         public void EquipWeapon(string weaponName)
         {
             WeaponConfig weapon = Resources.Load<WeaponConfig>(weaponName);
 
-            m_CurrentWeapon.value = weapon;
-            m_CurrentWeapon.value.Spawn(m_RightHand, m_LeftHand, m_Animator);
+            m_CurrentWeaponConfig = weapon;
+            m_CurrentWeaponConfig.Spawn(m_RightHand, m_LeftHand, m_Animator);
         }
 
         public JToken CaptureAsJToken()
         {
-            return JToken.FromObject(m_CurrentWeapon.value.name);
+            return JToken.FromObject(m_CurrentWeaponConfig.name);
         }
 
         public void RestoreFromJToken(JToken state)
@@ -216,6 +223,5 @@ namespace RPG.Combat
             var weaponName = state.ToObject<string>();
             EquipWeapon(weaponName);
         }
-
     }
 }

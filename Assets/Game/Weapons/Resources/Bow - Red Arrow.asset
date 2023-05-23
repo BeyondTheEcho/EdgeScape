@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bow - Red Arrow
   m_EditorClassIdentifier: 
   m_AnimatorOverride: {fileID: 22100000, guid: dca412331419c4c448155085e36e1091, type: 2}
-  m_WeaponPrefab: {fileID: 2565291263218652944, guid: 63cc63ac72ad6d54c8c906198b026cc6, type: 3}
+  m_WeaponPrefab: {fileID: 2112316045024291478, guid: 63cc63ac72ad6d54c8c906198b026cc6, type: 3}
   m_ProjectilePrefab: {fileID: 3049386686277895964, guid: 663e03f594c39854e94d3dc3a53e6f8c, type: 3}
   m_WeaponRange: 20
   m_WeaponDamage: 10
