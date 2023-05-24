@@ -34,6 +34,7 @@ namespace RPG.Attributes
             m_BaseStats.a_OnLevelUp += RestoreHealth;
         }
 
+
         private float GetInitialHealth()
         {
             return m_BaseStats.GetStat(Stat.Health);
@@ -55,8 +56,12 @@ namespace RPG.Attributes
                 Die();
                 AwardExperience(attacker);
             }
+        }
 
-            Debug.Log($"[{gameObject.name}] - Health: {m_Health.value} - Took {damage} damage.");
+
+        public void Heal(float healValue)
+        {
+            m_Health.value = Mathf.Min(m_Health.value + healValue, GetMaxHealthPoints());
         }
 
         private void AwardExperience(GameObject attacker)
