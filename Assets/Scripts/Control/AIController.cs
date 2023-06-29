@@ -13,6 +13,7 @@ namespace RPG.Control
     {
         [SerializeField] private float m_ChaseDistance = 5.0f;
         [SerializeField] private float m_SuspisionTime = 5.0f;
+        [SerializeField] private float m_AggroCooldownTime = 5.0f;
         [SerializeField] private PatrolPath m_PatrolPath = null;
         [SerializeField] private float m_WaypointTolerance = 1.0f;
         [SerializeField] private float m_DwellTime = 5.0f;
@@ -28,6 +29,7 @@ namespace RPG.Control
         private Vector3 m_LastKnownPlayerPosition;
         private float m_TimeSincePlayerLastSeen = Mathf.Infinity;
         private float m_TimeSinceArrivedAtWaypoint = Mathf.Infinity;
+        private float m_TimeSinceAggrevated = Mathf.Infinity;
         private int m_CurrentWaypoint = 0;
 
         private void Awake()
@@ -49,7 +51,7 @@ namespace RPG.Control
         {
             if (m_Health.IsDead()) return;
 
-            if (InAttackRangeOfPlayer() && m_Fighter.CanAttack(m_Player))
+            if (IsAggrevated() && m_Fighter.CanAttack(m_Player))
             {
                 AttackBehaviour();
             }
@@ -65,6 +67,12 @@ namespace RPG.Control
             UpdateTimers();
         }
 
+        //Called by A_TakeDamage event in Health.cs
+        public void Aggrevate()
+        {
+            m_TimeSinceAggrevated = 0;
+        }
+
         private Vector3 GetGuardPosition()
         {
             return transform.position;
@@ -74,6 +82,7 @@ namespace RPG.Control
         {
             m_TimeSincePlayerLastSeen += Time.deltaTime;
             m_TimeSinceArrivedAtWaypoint += Time.deltaTime;
+            m_TimeSinceAggrevated += Time.deltaTime;
         }
 
         private void PatrolBehaviour()
@@ -126,10 +135,10 @@ namespace RPG.Control
             m_TimeSincePlayerLastSeen = 0;
         }
 
-        private bool InAttackRangeOfPlayer()
+        private bool IsAggrevated()
         {
             float distanceToPlayer =  Vector3.Distance(transform.position, m_Player.transform.position);
-            return distanceToPlayer < m_ChaseDistance;
+            return distanceToPlayer < m_ChaseDistance || m_TimeSinceAggrevated < m_AggroCooldownTime;
         }
 
         //Called by Unity
