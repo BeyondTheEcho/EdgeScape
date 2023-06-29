@@ -11,9 +11,13 @@ namespace RPG.Control
 {
     public class AIController : MonoBehaviour
     {
+        [Header("Aggro Config")]
+        [SerializeField] private float m_ShoutDistance = 5.0f;
         [SerializeField] private float m_ChaseDistance = 5.0f;
         [SerializeField] private float m_SuspisionTime = 5.0f;
         [SerializeField] private float m_AggroCooldownTime = 5.0f;
+
+        [Header("Patrol Config")]
         [SerializeField] private PatrolPath m_PatrolPath = null;
         [SerializeField] private float m_WaypointTolerance = 1.0f;
         [SerializeField] private float m_DwellTime = 5.0f;
@@ -29,7 +33,7 @@ namespace RPG.Control
         private Vector3 m_LastKnownPlayerPosition;
         private float m_TimeSincePlayerLastSeen = Mathf.Infinity;
         private float m_TimeSinceArrivedAtWaypoint = Mathf.Infinity;
-        private float m_TimeSinceAggrevated = Mathf.Infinity;
+        private float m_TimeSinceAggravated = Mathf.Infinity;
         private int m_CurrentWaypoint = 0;
 
         private void Awake()
@@ -51,7 +55,7 @@ namespace RPG.Control
         {
             if (m_Health.IsDead()) return;
 
-            if (IsAggrevated() && m_Fighter.CanAttack(m_Player))
+            if (IsAggravated() && m_Fighter.CanAttack(m_Player))
             {
                 AttackBehaviour();
             }
@@ -68,9 +72,9 @@ namespace RPG.Control
         }
 
         //Called by A_TakeDamage event in Health.cs
-        public void Aggrevate()
+        public void Aggravate()
         {
-            m_TimeSinceAggrevated = 0;
+            m_TimeSinceAggravated = 0;
         }
 
         private Vector3 GetGuardPosition()
@@ -82,7 +86,7 @@ namespace RPG.Control
         {
             m_TimeSincePlayerLastSeen += Time.deltaTime;
             m_TimeSinceArrivedAtWaypoint += Time.deltaTime;
-            m_TimeSinceAggrevated += Time.deltaTime;
+            m_TimeSinceAggravated += Time.deltaTime;
         }
 
         private void PatrolBehaviour()
@@ -133,12 +137,27 @@ namespace RPG.Control
             m_Fighter.Attack(m_Player);
             m_LastKnownPlayerPosition = m_Player.transform.position;
             m_TimeSincePlayerLastSeen = 0;
+
+            AggravateNearbyEnemies();
         }
 
-        private bool IsAggrevated()
+        private void AggravateNearbyEnemies()
+        {
+            RaycastHit[] hits = Physics.SphereCastAll(transform.position, m_ShoutDistance, Vector3.up, 0);
+
+            foreach (var item in hits)
+            {
+                if (item.transform.TryGetComponent(out AIController enemy))
+                {
+                    enemy.Aggravate();
+                }
+            }
+        }
+
+        private bool IsAggravated()
         {
             float distanceToPlayer =  Vector3.Distance(transform.position, m_Player.transform.position);
-            return distanceToPlayer < m_ChaseDistance || m_TimeSinceAggrevated < m_AggroCooldownTime;
+            return distanceToPlayer < m_ChaseDistance || m_TimeSinceAggravated < m_AggroCooldownTime;
         }
 
         //Called by Unity

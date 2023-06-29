@@ -54,7 +54,6 @@ namespace RPG.Audio
 
             m_AudioSource.PlayOneShot(m_AudioClips[randomClipIndex]);
 
-            Debug.Log($"{transform.parent.parent.gameObject.name} Played: {m_AudioClips[randomClipIndex].name}");
         }
     }
 }

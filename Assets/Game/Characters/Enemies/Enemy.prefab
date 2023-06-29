@@ -33,7 +33,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4388151616419498256, guid: 4eed3f4aa673d1a43972404bd5199e4a, type: 3}
       propertyPath: a_TakeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: Aggrevate
+      value: Aggravate
       objectReference: {fileID: 0}
     - target: {fileID: -4388151616419498256, guid: 4eed3f4aa673d1a43972404bd5199e4a, type: 3}
       propertyPath: a_TakeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
@@ -189,8 +189,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 251466da4b27a2f4db2ffc3cb2b028a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ShoutDistance: 5
   m_ChaseDistance: 5
   m_SuspisionTime: 5
+  m_AggroCooldownTime: 5
   m_PatrolPath: {fileID: 0}
   m_WaypointTolerance: 1
   m_DwellTime: 5
