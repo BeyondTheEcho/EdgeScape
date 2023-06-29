@@ -66,7 +66,7 @@ namespace RPG.Combat
             if (m_Target == null) return;
             if (m_Target.IsDead()) return;
 
-            if (!GetIsInRange())
+            if (!GetIsInRange(m_Target.transform))
             {
                 var speed = 1.0f;
 
@@ -141,9 +141,9 @@ namespace RPG.Combat
             Hit();
         }
 
-        private bool GetIsInRange()
+        private bool GetIsInRange(Transform targeTransform)
         {
-            bool isInRange = Vector3.Distance(transform.position, m_Target.transform.position) < m_CurrentWeaponConfig.GetWeaponRange();
+            bool isInRange = Vector3.Distance(transform.position, targeTransform.position) < m_CurrentWeaponConfig.GetWeaponRange();
             return isInRange;
         }
 
@@ -156,7 +156,11 @@ namespace RPG.Combat
         public bool CanAttack(GameObject combatTarget)
         {
             if(combatTarget == null) return false;
-            if(!m_Mover.CanMoveTo(combatTarget.transform.position)) return false;
+
+            if (!m_Mover.CanMoveTo(combatTarget.transform.position) && !GetIsInRange(combatTarget.transform))
+            {
+                return false;
+            }
 
             Health targetToTest = combatTarget.GetComponent<Health>();
             return targetToTest != null && !targetToTest.IsDead();
