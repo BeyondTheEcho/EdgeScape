@@ -6,6 +6,7 @@ using UnityEngine.AI;
 using RPG.Core;
 using RPG.Saving;
 using RPG.Attributes;
+using UnityEngine.UIElements;
 
 namespace RPG.Movement
 {
@@ -13,7 +14,9 @@ namespace RPG.Movement
     [RequireComponent(typeof(NavMeshAgent))]
     public class Mover : MonoBehaviour, IAction, IJsonSaveable
     {
+        //Config
         [SerializeField] private float m_MaxSpeed = 6f;
+        [SerializeField] private float m_MaxNavPathLength = 40f;
 
         private NavMeshAgent m_Agent;
         private Animator m_Animator;
@@ -55,6 +58,17 @@ namespace RPG.Movement
             MoveTo(destination, speedFraction);
         }
 
+        public bool CanMoveTo(Vector3 destination)
+        {
+            //Path is being populated when passed into Calculate Path (Read shitty out variable)
+            NavMeshPath path = new NavMeshPath();
+            if (!NavMesh.CalculatePath(transform.position, destination, NavMesh.AllAreas, path)) return false;
+            if (path.status != NavMeshPathStatus.PathComplete) return false;
+            if (GetPathLength(path) > m_MaxNavPathLength) return false;
+
+            return true;
+        }
+
         public void MoveTo(Vector3 destination, float speedFraction)
         {
             m_Agent.destination = destination;
@@ -65,6 +79,20 @@ namespace RPG.Movement
         public void Cancel()
         {
             m_Agent.isStopped = true;
+        }
+
+        private float GetPathLength(NavMeshPath path)
+        {
+            float total = 0;
+
+            if (path.corners.Length < 2) return total;
+
+            for (int i = 0; i < path.corners.Length - 1; i++)
+            {
+                total += Vector3.Distance(path.corners[i], path.corners[i + 1]);
+            }
+
+            return total;
         }
 
         public JToken CaptureAsJToken()

@@ -17,7 +17,6 @@ namespace RPG.Control
     {
         //Config
         [SerializeField] private float m_MaxNavMeshProjectionDistance = 1f;
-        [SerializeField] private float m_MaxNavPathLength = 40f;
 
         //Array of Cursor Mappings
         [SerializeField] private CursorMapping[] m_CursorMappings;
@@ -103,6 +102,8 @@ namespace RPG.Control
         {
             if (RaycastNavMesh(out Vector3 target))
             {
+                if (!m_Mover.CanMoveTo(target)) return false;
+
                 if (Input.GetMouseButton(c_LeftMouseButton))
                 {
                     m_Mover.StartMoveAction(target, c_MaxSpeed);
@@ -112,7 +113,6 @@ namespace RPG.Control
                 return true;
             }
             
-
             return false;
         }
 
@@ -127,26 +127,12 @@ namespace RPG.Control
             position = navMeshHit.position;
 
             //Path is being populated when passed into Calculate Path (Read shitty out variable)
-            NavMeshPath path = new NavMeshPath();
-            if (!NavMesh.CalculatePath(transform.position, position, NavMesh.AllAreas, path)) return false;
-            if (path.status != NavMeshPathStatus.PathComplete) return false;
-            if (GetPathLength(path) > m_MaxNavPathLength) return false;
+            //NavMeshPath path = new NavMeshPath();
+            //if (!NavMesh.CalculatePath(transform.position, position, NavMesh.AllAreas, path)) return false;
+            //if (path.status != NavMeshPathStatus.PathComplete) return false;
+            //if (GetPathLength(path) > m_MaxNavPathLength) return false;
 
             return true;
-        }
-
-        private float GetPathLength(NavMeshPath path)
-        {
-            float total = 0;
-
-            if (path.corners.Length < 2) return total;
-
-            for (int i = 0; i < path.corners.Length - 1; i++) 
-            {
-                total += Vector3.Distance(path.corners[i], path.corners[i + 1]);
-            }
-
-            return total;
         }
 
         RaycastHit[] RaycastAllSorted()
