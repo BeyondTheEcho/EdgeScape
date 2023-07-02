@@ -173,52 +173,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3774749760042461063}
   m_Enabled: 1
---- !u!114 &6364591113179432283
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3774749760042461063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 717b78d49be23864d9c6b2d413081d03, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MaxNavMeshProjectionDistance: 1
-  m_MaxNavPathLength: 40
-  m_CursorMappings:
-  - m_Type: 0
-    m_Texture: {fileID: 2800000, guid: 21628736160fcc9488493401da3ef621, type: 3}
-    m_Hotspot: {x: 0, y: 0}
-  - m_Type: 1
-    m_Texture: {fileID: 2800000, guid: 8ea795c067613354898068091ffc7130, type: 3}
-    m_Hotspot: {x: 0, y: 0}
-  - m_Type: 2
-    m_Texture: {fileID: 2800000, guid: 2d18e23e3ce249b4489b8bcdd02d3f48, type: 3}
-    m_Hotspot: {x: 0, y: 0}
-  - m_Type: 3
-    m_Texture: {fileID: 2800000, guid: e4fac5245b727db42ba0ca0258851b83, type: 3}
-    m_Hotspot: {x: 0, y: 0}
-  - m_Type: 4
-    m_Texture: {fileID: 2800000, guid: f8c873f1e53e83f4aabf342d6be1dfc3, type: 3}
-    m_Hotspot: {x: 0, y: 0}
-  - m_Type: 5
-    m_Texture: {fileID: 2800000, guid: 7d4a349e204be984cbd483b7ba288543, type: 3}
-    m_Hotspot: {x: 0, y: 0}
---- !u!114 &7979939882950588615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3774749760042461063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 035254a62f33dce4f82e939c58dec261, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ExperiencePoints: 0
 --- !u!114 &557623227960249122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,6 +210,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a19ff972ec6859b48870488d7b1e81b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6364591113179432283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3774749760042461063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 717b78d49be23864d9c6b2d413081d03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MaxNavMeshProjectionDistance: 1
+  m_InteractSphereCastRadius: 1
+  m_CursorMappings:
+  - m_Type: 0
+    m_Texture: {fileID: 2800000, guid: 21628736160fcc9488493401da3ef621, type: 3}
+    m_Hotspot: {x: 0, y: 0}
+  - m_Type: 1
+    m_Texture: {fileID: 2800000, guid: 8ea795c067613354898068091ffc7130, type: 3}
+    m_Hotspot: {x: 0, y: 0}
+  - m_Type: 2
+    m_Texture: {fileID: 2800000, guid: 2d18e23e3ce249b4489b8bcdd02d3f48, type: 3}
+    m_Hotspot: {x: 0, y: 0}
+  - m_Type: 3
+    m_Texture: {fileID: 2800000, guid: e4fac5245b727db42ba0ca0258851b83, type: 3}
+    m_Hotspot: {x: 0, y: 0}
+  - m_Type: 4
+    m_Texture: {fileID: 2800000, guid: f8c873f1e53e83f4aabf342d6be1dfc3, type: 3}
+    m_Hotspot: {x: 0, y: 0}
+  - m_Type: 5
+    m_Texture: {fileID: 2800000, guid: 7d4a349e204be984cbd483b7ba288543, type: 3}
+    m_Hotspot: {x: 0, y: 0}
+  - m_Type: 6
+    m_Texture: {fileID: 2800000, guid: f8c873f1e53e83f4aabf342d6be1dfc3, type: 3}
+    m_Hotspot: {x: 0, y: 0}
+--- !u!114 &7979939882950588615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3774749760042461063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 035254a62f33dce4f82e939c58dec261, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ExperiencePoints: 0
 --- !u!1001 &2843729024430452458
 PrefabInstance:
   m_ObjectHideFlags: 0

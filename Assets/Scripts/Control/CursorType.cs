@@ -8,5 +8,6 @@ namespace RPG.Control
         UI,
         Pickup,
         Portal,
+        FullPickup,
     }
 }
