@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Inventories
+namespace RPG.Inventories
 {
     /// <summary>
     /// Locations on the players body where items can be equipped.

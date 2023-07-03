@@ -1,12 +1,11 @@
 using UnityEngine;
 
-namespace Inventories
+namespace RPG.Inventories
 {
     /// <summary>
     /// An inventory item that can be equipped to the player. Weapons could be a
     /// subclass of this.
     /// </summary>
-    [CreateAssetMenu(menuName = ("Inventory System/Equipable Item"))]
     public class EquipableItem : InventoryItem
     {
         // CONFIG DATA

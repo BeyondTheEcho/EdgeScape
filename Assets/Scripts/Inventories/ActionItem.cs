@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Inventories
+namespace RPG.Inventories
 {
     /// <summary>
     /// An inventory item that can be placed in the action bar and "Used".
@@ -10,7 +10,7 @@ namespace Inventories
     /// This class should be used as a base. Subclasses must implement the `Use`
     /// method.
     /// </remarks>
-    [CreateAssetMenu(menuName = ("Inventory System/Action Item"))]
+    [CreateAssetMenu(menuName = ("Inventory/Action Item"))]
     public class ActionItem : InventoryItem
     {
         // CONFIG DATA

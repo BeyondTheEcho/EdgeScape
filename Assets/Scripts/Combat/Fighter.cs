@@ -10,14 +10,14 @@ using RPG.Stats;
 using System.Collections.Generic;
 using GameDevTV.Utils;
 using System;
-using Inventories;
+using RPG.Inventories;
 
 namespace RPG.Combat
 {
     [RequireComponent(typeof(ActionScheduler))]
     [RequireComponent(typeof(Mover))]
     [RequireComponent(typeof(Animator))]
-    public class Fighter : MonoBehaviour, IAction, IJsonSaveable, IModifierProvider
+    public class Fighter : MonoBehaviour, IAction, IJsonSaveable
     {
         //Config
         [Header("Condig")]
@@ -119,22 +119,6 @@ namespace RPG.Combat
         {
             StopAttack();
             m_Target = null;
-        }
-
-        public IEnumerable<float> GetAdditiveModifiers(Stat stat)
-        {
-            if (stat == Stat.Damage)
-            {
-                yield return m_CurrentWeaponConfig.GetWeaponDamage();
-            }
-        }
-
-        public IEnumerable<float> GetPercentageModifiers(Stat stat)
-        {
-            if (stat == Stat.Damage)
-            {
-                yield return m_CurrentWeaponConfig.GetWeaponPercentageBonus();
-            }
         }
 
         public Health GetTarget()

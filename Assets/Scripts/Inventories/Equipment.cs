@@ -4,7 +4,7 @@ using UnityEngine;
 using RPG.Saving;
 using Newtonsoft.Json.Linq;
 
-namespace Inventories
+namespace RPG.Inventories
 {
     /// <summary>
     /// Provides a store for the items equipped to a player. Items are stored by

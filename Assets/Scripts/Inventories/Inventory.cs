@@ -4,7 +4,7 @@ using RPG.Saving;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
-namespace Inventories
+namespace RPG.Inventories
 {
     /// <summary>
     /// Provides storage for the player inventory. A configurable number of

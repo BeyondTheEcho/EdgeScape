@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Core.UI.Dragging;
-using Inventories;
+using RPG.Inventories;
 
-namespace UI.Inventories
+namespace UI.RPG.Inventories
 {
     /// <summary>
     /// Handles spawning pickups when item dropped into the world.

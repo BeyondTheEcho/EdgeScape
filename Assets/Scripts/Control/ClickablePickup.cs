@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Inventories;
+using RPG.Inventories;
 using UnityEngine;
 
 namespace RPG.Control

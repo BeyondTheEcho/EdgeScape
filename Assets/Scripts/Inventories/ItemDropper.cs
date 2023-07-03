@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Inventories
+namespace RPG.Inventories
 {
     /// <summary>
     /// To be placed on anything that wishes to drop pickups into the world.

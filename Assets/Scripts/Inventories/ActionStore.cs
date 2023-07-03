@@ -4,7 +4,7 @@ using UnityEngine;
 using Newtonsoft.Json.Linq;
 using RPG.Saving;
 
-namespace Inventories
+namespace RPG.Inventories
 {
     /// <summary>
     /// Provides the storage for an action bar. The bar has a finite number of
