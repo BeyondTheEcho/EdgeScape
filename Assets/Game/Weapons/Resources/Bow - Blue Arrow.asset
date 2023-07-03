@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49b384ddf5594c14d8296bcc0245b2fe, type: 3}
   m_Name: Bow - Blue Arrow
   m_EditorClassIdentifier: 
+  itemID: 4532325d-f24e-4016-9db2-e1aca7163265
+  displayName: Basic Blue Bow
+  description: A basic bow that fires blue projectiles
+  icon: {fileID: 21300000, guid: f049b8f6e6c70664abce7e9de8fc5a5c, type: 3}
+  pickup: {fileID: 8369870742584567065, guid: c06676d4fb7d5604288b748d7d15dd38, type: 3}
+  stackable: 0
+  allowedEquipLocation: 5
   m_AnimatorOverride: {fileID: 22100000, guid: dca412331419c4c448155085e36e1091, type: 2}
   m_WeaponPrefab: {fileID: 2112316045024291478, guid: 63cc63ac72ad6d54c8c906198b026cc6, type: 3}
   m_ProjectilePrefab: {fileID: 6131422481102037106, guid: b040ec96f872376478eae6d5fef7b41a, type: 3}

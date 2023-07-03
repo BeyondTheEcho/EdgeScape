@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using RPG.Core;
 using RPG.Attributes;
 using UnityEngine;
+using Inventories;
 
 namespace RPG.Combat
 {
     [CreateAssetMenu(fileName = "Weapon", menuName = "EdgeScape/Make New Weapon", order = 0)]
-    public class WeaponConfig : ScriptableObject
+    public class WeaponConfig : EquipableItem
     {
         [SerializeField] private AnimatorOverrideController m_AnimatorOverride;
         [SerializeField] private Weapon m_WeaponPrefab;

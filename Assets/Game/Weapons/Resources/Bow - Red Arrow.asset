@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49b384ddf5594c14d8296bcc0245b2fe, type: 3}
   m_Name: Bow - Red Arrow
   m_EditorClassIdentifier: 
+  itemID: 6863769a-9ad8-4adc-b0d4-c8076df3cef3
+  displayName: Basic Red Bow
+  description: A basic bow that fires red arrows.
+  icon: {fileID: 21300000, guid: f049b8f6e6c70664abce7e9de8fc5a5c, type: 3}
+  pickup: {fileID: 8369870742584567065, guid: c06676d4fb7d5604288b748d7d15dd38, type: 3}
+  stackable: 0
+  allowedEquipLocation: 5
   m_AnimatorOverride: {fileID: 22100000, guid: dca412331419c4c448155085e36e1091, type: 2}
   m_WeaponPrefab: {fileID: 2112316045024291478, guid: 63cc63ac72ad6d54c8c906198b026cc6, type: 3}
   m_ProjectilePrefab: {fileID: 3049386686277895964, guid: 663e03f594c39854e94d3dc3a53e6f8c, type: 3}
