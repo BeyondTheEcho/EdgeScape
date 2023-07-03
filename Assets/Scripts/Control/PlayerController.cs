@@ -27,6 +27,9 @@ namespace RPG.Control
         private Fighter m_Fighter;
         private Health m_Health;
 
+        //Private Vars
+        private bool m_IsDraggingUI = false; //Must be initialized as false
+
         //Constants
         private const float c_MaxSpeed = 1f; //Val MUST be 1f
         private const int c_LeftMouseButton = 0;
@@ -89,12 +92,24 @@ namespace RPG.Control
 
         private bool InteractWithUI()
         {
+            if (Input.GetMouseButtonUp(0)) 
+            {
+                m_IsDraggingUI = false;
+            }
+
             //Returns true if cursor is over UI gameobjects only
             if(EventSystem.current.IsPointerOverGameObject())
             {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    m_IsDraggingUI = true;
+                }
+
                 SetCursor(CursorType.UI);
                 return true;
             }
+
+            if (m_IsDraggingUI) return true;
 
             return false;
         }
