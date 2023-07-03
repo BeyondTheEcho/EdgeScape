@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using RPG.Saving;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace RPG.Inventories
 {
@@ -14,14 +15,22 @@ namespace RPG.Inventories
         [SerializeField] InventoryItem m_Item = null;
         [SerializeField] int m_Number = 1;
 
-        // LIFECYCLE METHODS
+        //Constants
+        private const int c_MaxNavMeshSpawnAttempts = 30;
+
+        //------------------------------------------------------------
+        //                Unity Monobehaviour Functions
+        //------------------------------------------------------------
+
         private void Awake()
         {
             // Spawn in Awake so can be destroyed by save system after.
             SpawnPickup();
         }
 
-        // PUBLIC
+        //------------------------------------------------------------
+        //                Public Functions
+        //------------------------------------------------------------
 
         /// <summary>
         /// Returns the pickup spawned by this class if it exists.
@@ -40,11 +49,28 @@ namespace RPG.Inventories
             return GetPickup() == null;
         }
 
-        //PRIVATE
+        //------------------------------------------------------------
+        //                Private Functions
+        //------------------------------------------------------------
 
         private void SpawnPickup()
         {
-            var spawnedPickup = m_Item.SpawnPickup(transform.position, m_Number);
+            Pickup spawnedPickup;
+
+            for (int i = 0; i < c_MaxNavMeshSpawnAttempts; i++)
+            {
+                Vector3 spawnPosition = transform.position;
+
+                if (NavMesh.SamplePosition(spawnPosition, out NavMeshHit hit, 1f, NavMesh.AllAreas))
+                {
+                    spawnedPickup = m_Item.SpawnPickup(hit.position, m_Number);
+                    spawnedPickup.transform.SetParent(transform);
+
+                    return;
+                }
+            }
+
+            spawnedPickup = m_Item.SpawnPickup(transform.position, m_Number);
             spawnedPickup.transform.SetParent(transform);
         }
 
@@ -55,6 +81,10 @@ namespace RPG.Inventories
                 Destroy(GetPickup().gameObject);
             }
         }
+
+        //------------------------------------------------------------
+        //            IJsonSaveable Implemented Functions
+        //------------------------------------------------------------
 
         public JToken CaptureAsJToken()
         {
