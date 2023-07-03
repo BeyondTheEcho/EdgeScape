@@ -10,9 +10,28 @@ namespace RPG.Inventories
         //Config
         [Tooltip("How far drops an be scattered from the transform location in Unity units")]
         [SerializeField] private float m_DropScatterDistance = 1f;
+        [SerializeField] private InventoryItem[] m_DropLibrary;
+        [SerializeField] private int m_NumberOfDrops = 2;
 
         //Constants
         private const int c_MaxAttempts = 30;
+
+        //------------------------------------------------------------
+        //                   Public
+        //------------------------------------------------------------
+
+        public void RandomDrop()
+        {
+            for (int i = 0; i < m_NumberOfDrops; i++)
+            {
+                var item = m_DropLibrary[Random.Range(0, m_DropLibrary.Length)];
+                DropItem(item, 1);
+            }
+        }
+
+        //------------------------------------------------------------
+        //                   Protected
+        //------------------------------------------------------------
 
         protected override Vector3 GetDropLocation()
         {

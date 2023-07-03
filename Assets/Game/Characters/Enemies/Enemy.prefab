@@ -16,12 +16,32 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5529619644839781038}
     - target: {fileID: -4388151616419498256, guid: 4eed3f4aa673d1a43972404bd5199e4a, type: 3}
+      propertyPath: a_OnDie.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4388151616419498256, guid: 4eed3f4aa673d1a43972404bd5199e4a, type: 3}
       propertyPath: a_TakeDamage.m_PersistentCalls.m_Calls.Array.size
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -4388151616419498256, guid: 4eed3f4aa673d1a43972404bd5199e4a, type: 3}
+      propertyPath: a_OnDie.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4388151616419498256, guid: 4eed3f4aa673d1a43972404bd5199e4a, type: 3}
+      propertyPath: a_OnDie.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 3481505033415004411}
+    - target: {fileID: -4388151616419498256, guid: 4eed3f4aa673d1a43972404bd5199e4a, type: 3}
+      propertyPath: a_OnDie.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4388151616419498256, guid: 4eed3f4aa673d1a43972404bd5199e4a, type: 3}
       propertyPath: a_TakeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4388151616419498256, guid: 4eed3f4aa673d1a43972404bd5199e4a, type: 3}
+      propertyPath: a_OnDie.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: RandomDrop
       objectReference: {fileID: 0}
     - target: {fileID: -4388151616419498256, guid: 4eed3f4aa673d1a43972404bd5199e4a, type: 3}
       propertyPath: a_TakeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_Target
@@ -36,8 +56,16 @@ PrefabInstance:
       value: Aggravate
       objectReference: {fileID: 0}
     - target: {fileID: -4388151616419498256, guid: 4eed3f4aa673d1a43972404bd5199e4a, type: 3}
+      propertyPath: a_OnDie.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: RPG.Inventories.RandomDropper, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: -4388151616419498256, guid: 4eed3f4aa673d1a43972404bd5199e4a, type: 3}
       propertyPath: a_TakeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
       value: RPG.Control.AIController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: -4388151616419498256, guid: 4eed3f4aa673d1a43972404bd5199e4a, type: 3}
+      propertyPath: a_OnDie.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: -4388151616419498256, guid: 4eed3f4aa673d1a43972404bd5199e4a, type: 3}
       propertyPath: a_TakeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -177,6 +205,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21421d933a13728478030f53ae23c88a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3481505033415004411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2048524596880314527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5db378cf015264f448bbb904410381bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_DropScatterDistance: 2
+  m_DropLibrary:
+  - {fileID: 11400000, guid: c69b32a1dfc1be34786c664885e0b09f, type: 2}
+  - {fileID: 11400000, guid: f42c8128ebb63744ea9b7c9c956dd864, type: 2}
+  - {fileID: 11400000, guid: c0a65bcb0dae59641abb9e9eb05f1d00, type: 2}
+  - {fileID: 11400000, guid: 8a84911140642b14a8b62eb5be0ce184, type: 2}
+  - {fileID: 11400000, guid: 41eaa5a728a1c4f428822f2fbd4de430, type: 2}
+  m_NumberOfDrops: 2
 --- !u!114 &5679126463926021424
 MonoBehaviour:
   m_ObjectHideFlags: 0
