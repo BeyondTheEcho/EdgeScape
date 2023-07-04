@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using RPG.Stats;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEditor.Progress;
 
 namespace RPG.Inventories
 {
@@ -10,7 +12,7 @@ namespace RPG.Inventories
         //Config
         [Tooltip("How far drops an be scattered from the transform location in Unity units")]
         [SerializeField] private float m_DropScatterDistance = 1f;
-        [SerializeField] private InventoryItem[] m_DropLibrary;
+        [SerializeField] private DropLibrary m_DropLibrary;
         [SerializeField] private int m_NumberOfDrops = 2;
 
         //Constants
@@ -22,10 +24,16 @@ namespace RPG.Inventories
 
         public void RandomDrop()
         {
+            var baseStats = GetComponent<BaseStats>();
+
             for (int i = 0; i < m_NumberOfDrops; i++)
             {
-                var item = m_DropLibrary[Random.Range(0, m_DropLibrary.Length)];
-                DropItem(item, 1);
+                var drops = m_DropLibrary.GetRandomDrops(baseStats.GetLevel());
+
+                foreach (var drop in drops)
+                {
+                    DropItem(drop.m_Item, drop.m_Number);
+                }
             }
         }
 

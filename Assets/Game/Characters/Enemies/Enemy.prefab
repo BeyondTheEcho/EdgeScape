@@ -218,12 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_DropScatterDistance: 2
-  m_DropLibrary:
-  - {fileID: 11400000, guid: c69b32a1dfc1be34786c664885e0b09f, type: 2}
-  - {fileID: 11400000, guid: f42c8128ebb63744ea9b7c9c956dd864, type: 2}
-  - {fileID: 11400000, guid: c0a65bcb0dae59641abb9e9eb05f1d00, type: 2}
-  - {fileID: 11400000, guid: 8a84911140642b14a8b62eb5be0ce184, type: 2}
-  - {fileID: 11400000, guid: 41eaa5a728a1c4f428822f2fbd4de430, type: 2}
+  m_DropLibrary: {fileID: 11400000, guid: 2e6508d4058b1084f84ee0233ea7a05b, type: 2}
   m_NumberOfDrops: 2
 --- !u!114 &5679126463926021424
 MonoBehaviour:
