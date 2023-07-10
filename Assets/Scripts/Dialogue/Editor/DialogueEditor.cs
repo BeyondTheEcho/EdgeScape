@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -9,7 +10,9 @@ namespace RPG.Dialogue.Editor
     public class DialogueEditor : EditorWindow
     {
         private Dialogue m_SelectedDialogue = null;
-        private string m_CustomText = "Bob";
+        private GUIStyle m_NodeStyle;
+        private DialogueNode m_DraggingNode = null;
+        private Vector2 m_DragOffset = Vector2.zero;
 
         [MenuItem("Window/Dialogue Editor")]
         public static void ShowEditorWindow()
@@ -33,6 +36,11 @@ namespace RPG.Dialogue.Editor
         private void OnEnable()
         {
             Selection.selectionChanged += OnSelectionChange;
+
+            m_NodeStyle = new GUIStyle();
+            m_NodeStyle.normal.background = EditorGUIUtility.Load("node0") as Texture2D;
+            m_NodeStyle.padding = new RectOffset(20, 20, 20, 20);
+            m_NodeStyle.border = new RectOffset(12, 12, 12, 12);
         }
 
         private void OnSelectionChange()
@@ -52,17 +60,71 @@ namespace RPG.Dialogue.Editor
             }
             else
             {
+                HandleEvents();
+
                 foreach (DialogueNode node in m_SelectedDialogue.GetDialogueNodes())
                 {
-                    string text = EditorGUILayout.TextField(node.m_Content);
-
-                    if (text != node.m_Content) 
-                    {
-                        node.m_Content = text;
-                        EditorUtility.SetDirty(m_SelectedDialogue);
-                    }
-                }               
+                    OnGUINode(node);
+                }
             }
+        }
+
+        private void HandleEvents()
+        {
+            if (Event.current.type == EventType.MouseDown && m_DraggingNode == null)
+            {
+                m_DraggingNode = GetNodeAtPoint(Event.current.mousePosition);
+
+                if (m_DraggingNode != null)
+                {
+                    m_DragOffset = m_DraggingNode.m_NodePosition.position - Event.current.mousePosition;
+                }
+            }
+            else if (Event.current.type == EventType.MouseDrag && m_DraggingNode != null)
+            {
+                Undo.RecordObject(m_SelectedDialogue, "Move Dialogue Node");
+                m_DraggingNode.m_NodePosition.position = Event.current.mousePosition + m_DragOffset;
+                Repaint();
+            }
+            else if (Event.current.type == EventType.MouseUp && m_DraggingNode != null)
+            {
+                m_DraggingNode = null;
+            }
+        }
+
+        private DialogueNode GetNodeAtPoint(Vector2 mousePosition)
+        {
+            DialogueNode dialogueNode = null;
+
+            foreach (DialogueNode node in m_SelectedDialogue.GetDialogueNodes())
+            {
+                if (node.m_NodePosition.Contains(mousePosition))
+                {
+                    dialogueNode = node;
+                }
+            }
+
+            return dialogueNode;
+        }
+
+        private void OnGUINode(DialogueNode node)
+        {
+            GUILayout.BeginArea(node.m_NodePosition, m_NodeStyle);
+
+            EditorGUI.BeginChangeCheck();
+
+            EditorGUILayout.LabelField("Node:", EditorStyles.whiteLabel);
+            string idText = EditorGUILayout.TextField(node.m_UID);
+            string contentText = EditorGUILayout.TextField(node.m_Content);
+
+            if (EditorGUI.EndChangeCheck())
+            {
+                Undo.RecordObject(m_SelectedDialogue, "Update Dialogue Text");
+                node.m_UID = idText;
+                node.m_Content = contentText;
+            }
+
+            GUILayout.EndArea();
         }
     }
 }
