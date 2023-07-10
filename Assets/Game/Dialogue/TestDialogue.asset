@@ -12,4 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f13d9923c64fe4a9084b85b740a4d7, type: 3}
   m_Name: TestDialogue
   m_EditorClassIdentifier: 
-  m_Nodes: []
+  m_Nodes:
+  - m_UID: 
+    m_Content: Hi
+    m_Children: []
+  - m_UID: 
+    m_Content: Bye
+    m_Children: []
+  - m_UID: 
+    m_Content: SeeHi
+    m_Children: []

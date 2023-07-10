@@ -9,6 +9,7 @@ namespace RPG.Dialogue.Editor
     public class DialogueEditor : EditorWindow
     {
         private Dialogue m_SelectedDialogue = null;
+        private string m_CustomText = "Bob";
 
         [MenuItem("Window/Dialogue Editor")]
         public static void ShowEditorWindow()
@@ -51,7 +52,16 @@ namespace RPG.Dialogue.Editor
             }
             else
             {
-                EditorGUILayout.LabelField(m_SelectedDialogue.name);
+                foreach (DialogueNode node in m_SelectedDialogue.GetDialogueNodes())
+                {
+                    string text = EditorGUILayout.TextField(node.m_Content);
+
+                    if (text != node.m_Content) 
+                    {
+                        node.m_Content = text;
+                        EditorUtility.SetDirty(m_SelectedDialogue);
+                    }
+                }               
             }
         }
     }
