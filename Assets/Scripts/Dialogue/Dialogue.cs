@@ -18,7 +18,10 @@ namespace RPG.Dialogue
 #if UNITY_EDITOR
             if(m_Nodes.Count == 0)
             {
-                m_Nodes.Add(new DialogueNode());
+                DialogueNode rootNode = new();
+                rootNode.m_UID = Guid.NewGuid().ToString();
+
+                m_Nodes.Add(rootNode);
             }
 #endif
 
@@ -54,6 +57,31 @@ namespace RPG.Dialogue
                 {
                     yield return m_NodesDict[childUID];
                 }
+            }
+        }
+
+        public void CreateNode(DialogueNode parentNode)
+        {
+            DialogueNode newNode = new();
+            newNode.m_UID = Guid.NewGuid().ToString();
+            m_Nodes.Add(newNode);
+            parentNode.m_Children.Add(newNode.m_UID);
+            OnValidate();
+        }
+
+        public void DeleteNode(DialogueNode nodeToDelete)
+        {
+            m_Nodes.Remove(nodeToDelete);
+            OnValidate();
+
+            CleanDanglingChildren(nodeToDelete);
+        }
+
+        private void CleanDanglingChildren(DialogueNode nodeToDelete)
+        {
+            foreach (DialogueNode node in m_Nodes)
+            {
+                node.m_Children.Remove(nodeToDelete.m_UID);
             }
         }
     }

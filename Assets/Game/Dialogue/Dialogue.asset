@@ -13,22 +13,12 @@ MonoBehaviour:
   m_Name: Dialogue
   m_EditorClassIdentifier: 
   m_Nodes:
-  - m_UID: A
-    m_Content: Hi
-    m_Children:
-    - B
-    m_NodePosition:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0
-      height: 0
-  - m_UID: B
-    m_Content: Hello you
+  - m_UID: ea9df46e-ac1b-4dd7-81ac-f53ed7dac565
+    m_Content: 
     m_Children: []
     m_NodePosition:
       serializedVersion: 2
       x: 0
       y: 0
-      width: 0
-      height: 0
+      width: 200
+      height: 100

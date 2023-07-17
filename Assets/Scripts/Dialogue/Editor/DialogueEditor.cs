@@ -10,9 +10,12 @@ namespace RPG.Dialogue.Editor
     public class DialogueEditor : EditorWindow
     {
         private Dialogue m_SelectedDialogue = null;
-        private GUIStyle m_NodeStyle;
-        private DialogueNode m_DraggingNode = null;
-        private Vector2 m_DragOffset = Vector2.zero;
+        [NonSerialized] private GUIStyle m_NodeStyle;
+        [NonSerialized] private DialogueNode m_DraggingNode = null;
+        [NonSerialized] private Vector2 m_DragOffset = Vector2.zero;
+        [NonSerialized] private DialogueNode m_CreatingNode = null;
+        
+        [NonSerialized] private DialogueNode m_DeletingNode = null;
 
         [MenuItem("Window/Dialogue Editor")]
         public static void ShowEditorWindow()
@@ -70,6 +73,20 @@ namespace RPG.Dialogue.Editor
                 foreach (DialogueNode node in m_SelectedDialogue.GetDialogueNodes())
                 {
                     DrawNode(node);
+                }
+
+                if (m_CreatingNode != null)
+                {
+                    Undo.RecordObject(m_SelectedDialogue, "Added Dialogue Node");
+                    m_SelectedDialogue.CreateNode(m_CreatingNode);
+                    m_CreatingNode = null;
+                }
+
+                if (m_DeletingNode != null)
+                {
+                     Undo.RecordObject(m_SelectedDialogue, "Removed Dialogue Node");
+                    m_SelectedDialogue.DeleteNode(m_DeletingNode);
+                    m_DeletingNode = null;
                 }
             }
         }
@@ -135,21 +152,27 @@ namespace RPG.Dialogue.Editor
 
             EditorGUI.BeginChangeCheck();
 
-            EditorGUILayout.LabelField("Node:", EditorStyles.whiteLabel);
-            string idText = EditorGUILayout.TextField(node.m_UID);
             string contentText = EditorGUILayout.TextField(node.m_Content);
 
             if (EditorGUI.EndChangeCheck())
             {
                 Undo.RecordObject(m_SelectedDialogue, "Update Dialogue Text");
-                node.m_UID = idText;
                 node.m_Content = contentText;
             }
 
-            foreach (DialogueNode childNode in m_SelectedDialogue.GetAllChildren(node))
+            GUILayout.BeginHorizontal();
+
+            if (GUILayout.Button("+"))
             {
-                EditorGUILayout.LabelField(childNode.m_Content);
+                m_CreatingNode = node;
             }
+
+            if (GUILayout.Button("-"))
+            {
+                m_DeletingNode = node;
+            }
+
+            GUILayout.EndHorizontal();
 
             GUILayout.EndArea();
         }

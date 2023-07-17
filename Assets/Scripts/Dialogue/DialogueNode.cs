@@ -9,7 +9,7 @@ namespace RPG.Dialogue
     {
         public string m_UID;
         public string m_Content;
-        public string[] m_Children;
+        public List<string> m_Children = new();
         public Rect m_NodePosition = new Rect(0, 0, 200, 100);
     }
 }
