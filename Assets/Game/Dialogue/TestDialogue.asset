@@ -18,25 +18,25 @@ MonoBehaviour:
     m_Children: []
     m_NodePosition:
       serializedVersion: 2
-      x: 50
-      y: 50
+      x: 410
+      y: 30
       width: 200
-      height: 200
+      height: 100
   - m_UID: b
     m_Content: Bye
     m_Children: []
     m_NodePosition:
       serializedVersion: 2
-      x: 1
-      y: 100
+      x: 38
+      y: 163
       width: 200
-      height: 200
-  - m_UID: 
+      height: 100
+  - m_UID: a
     m_Content: SeeHi
     m_Children: []
     m_NodePosition:
       serializedVersion: 2
-      x: 150
-      y: 150
+      x: 13
+      y: 30
       width: 200
-      height: 200
+      height: 100

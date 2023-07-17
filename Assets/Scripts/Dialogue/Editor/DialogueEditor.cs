@@ -124,6 +124,11 @@ namespace RPG.Dialogue.Editor
                 node.m_Content = contentText;
             }
 
+            foreach (DialogueNode childNode in m_SelectedDialogue.GetAllChildren(node))
+            {
+                EditorGUILayout.LabelField(childNode.m_Content);
+            }
+
             GUILayout.EndArea();
         }
     }
