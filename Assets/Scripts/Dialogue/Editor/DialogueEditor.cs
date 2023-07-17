@@ -16,6 +16,7 @@ namespace RPG.Dialogue.Editor
         [NonSerialized] private DialogueNode m_CreatingNode = null;
         
         [NonSerialized] private DialogueNode m_DeletingNode = null;
+        [NonSerialized] private DialogueNode m_LinkingParentNode = null;
 
         [MenuItem("Window/Dialogue Editor")]
         public static void ShowEditorWindow()
@@ -173,6 +174,44 @@ namespace RPG.Dialogue.Editor
             }
 
             GUILayout.EndHorizontal();
+
+            if (m_LinkingParentNode == null)
+            {
+                if (GUILayout.Button("Edit Links"))
+                {
+                    m_LinkingParentNode = node;
+                }      
+            }
+            else
+            {
+                if (m_LinkingParentNode == node)
+                {
+                    if (GUILayout.Button("Exit Edit Mode"))
+                    {
+                        m_LinkingParentNode = null;
+                    }  
+                }
+                else
+                {
+                    if (m_LinkingParentNode.m_Children.Contains(node.m_UID))
+                    {
+                        if (GUILayout.Button("Remove Link"))
+                        {
+                            Undo.RecordObject(m_SelectedDialogue, "Removed Dialogue Link");
+                            m_LinkingParentNode.m_Children.Remove(node.m_UID);
+                        }          
+                    }
+                    else
+                    {
+                        if (GUILayout.Button("Add Link"))
+                        {
+                            Undo.RecordObject(m_SelectedDialogue, "Added Dialogue Link");
+                            m_LinkingParentNode.m_Children.Add(node.m_UID);
+                        }          
+                    }
+     
+                }
+            }
 
             GUILayout.EndArea();
         }

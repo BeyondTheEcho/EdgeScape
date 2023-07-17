@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Dialogue
   m_EditorClassIdentifier: 
   m_Nodes:
-  - m_UID: ea9df46e-ac1b-4dd7-81ac-f53ed7dac565
+  - m_UID: 72ffd2ab-213e-485e-923a-ba632ecb47ca
     m_Content: 
     m_Children: []
     m_NodePosition:
