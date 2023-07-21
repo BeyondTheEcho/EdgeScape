@@ -14,9 +14,10 @@ namespace RPG.Dialogue.Editor
         [NonSerialized] private DialogueNode m_DraggingNode = null;
         [NonSerialized] private Vector2 m_DragOffset = Vector2.zero;
         [NonSerialized] private DialogueNode m_CreatingNode = null;
-        
         [NonSerialized] private DialogueNode m_DeletingNode = null;
         [NonSerialized] private DialogueNode m_LinkingParentNode = null;
+        private Vector2 m_ScrollPosition = Vector2.zero;
+
 
         [MenuItem("Window/Dialogue Editor")]
         public static void ShowEditorWindow()
@@ -66,6 +67,10 @@ namespace RPG.Dialogue.Editor
             {
                 HandleEvents();
 
+                m_ScrollPosition = EditorGUILayout.BeginScrollView(m_ScrollPosition);
+
+                GUILayoutUtility.GetRect(4000, 4000);
+
                 foreach (DialogueNode node in m_SelectedDialogue.GetDialogueNodes())
                 {
                     DrawConnections(node);
@@ -75,6 +80,8 @@ namespace RPG.Dialogue.Editor
                 {
                     DrawNode(node);
                 }
+
+                EditorGUILayout.EndScrollView();
 
                 if (m_CreatingNode != null)
                 {
@@ -113,7 +120,7 @@ namespace RPG.Dialogue.Editor
         {
             if (Event.current.type == EventType.MouseDown && m_DraggingNode == null)
             {
-                m_DraggingNode = GetNodeAtPoint(Event.current.mousePosition);
+                m_DraggingNode = GetNodeAtPoint(Event.current.mousePosition + m_ScrollPosition);
 
                 if (m_DraggingNode != null)
                 {
