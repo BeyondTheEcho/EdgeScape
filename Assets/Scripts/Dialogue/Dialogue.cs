@@ -7,7 +7,7 @@ using UnityEngine;
 namespace RPG.Dialogue
 {
     [CreateAssetMenu(fileName ="Dialogue", menuName="Dialogue/New Dialogue")]
-    public class Dialogue : ScriptableObject
+    public class Dialogue : ScriptableObject, ISerializationCallbackReceiver
     {
         [SerializeField] private List<DialogueNode> m_Nodes = new();
 
@@ -16,13 +16,6 @@ namespace RPG.Dialogue
 
         private void Awake()
         {
-#if UNITY_EDITOR
-            if(m_Nodes.Count == 0)
-            {
-                CreateNode(null);
-            }
-#endif
-
             //On Validate is not called in built game. Must be manually called.
             OnValidate();
         }
@@ -72,6 +65,8 @@ namespace RPG.Dialogue
                 parentNode.m_Children.Add(newNode.name);
             }
 
+            //AssetDatabase.AddObjectToAsset(newNode, this);
+
             OnValidate();
         }
 
@@ -89,6 +84,29 @@ namespace RPG.Dialogue
             {
                 node.m_Children.Remove(nodeToDelete.name);
             }
+        }
+
+        public void OnBeforeSerialize()
+        {
+            if (m_Nodes.Count == 0)
+            {
+                CreateNode(null);
+            }
+
+            if (AssetDatabase.GetAssetPath(this) != "")
+            {
+                foreach (DialogueNode node in m_Nodes)
+                {
+                    if (AssetDatabase.GetAssetPath(node) == "")
+                    {
+                        AssetDatabase.AddObjectToAsset(node, this);
+                    }
+                }
+            }
+        }
+
+        public void OnAfterDeserialize()
+        {
         }
     }
 }
