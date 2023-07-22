@@ -556,6 +556,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_DropScatterDistance: 2
+  m_DropLibrary: {fileID: 0}
+  m_NumberOfDrops: 2
 --- !u!1001 &681543623
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2497,11 +2499,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 707111858399652760, guid: f8f5a877356085a40ba27a7a00a6c1e8, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.03149532
+      value: -0.031495325
       objectReference: {fileID: 0}
     - target: {fileID: 707111858399652760, guid: f8f5a877356085a40ba27a7a00a6c1e8, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.09097875
+      value: -0.09097874
       objectReference: {fileID: 0}
     - target: {fileID: 707111858665205763, guid: f8f5a877356085a40ba27a7a00a6c1e8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4237,7 +4239,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8014507536417364647, guid: f8f5a877356085a40ba27a7a00a6c1e8, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -617.33795
+      value: -617.33716
       objectReference: {fileID: 0}
     - target: {fileID: 8014719176950909753, guid: f8f5a877356085a40ba27a7a00a6c1e8, type: 3}
       propertyPath: m_SizeDelta.x

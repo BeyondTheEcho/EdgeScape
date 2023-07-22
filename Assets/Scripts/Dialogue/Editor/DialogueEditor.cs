@@ -150,11 +150,13 @@ namespace RPG.Dialogue.Editor
             if (m_DraggingNode != null)
             {
                 m_DragOffset = m_DraggingNode.m_NodePosition.position - Event.current.mousePosition;
+                Selection.activeObject = m_DraggingNode;
             }
             else
             {
                 m_DraggingCanvas = true;
                 m_DraggingCanvasOffset = Event.current.mousePosition + m_ScrollPosition;
+                Selection.activeObject = m_SelectedDialogue;
             }
         }
 
@@ -262,12 +264,12 @@ namespace RPG.Dialogue.Editor
                 }
                 else
                 {
-                    if (m_LinkingParentNode.m_Children.Contains(node.m_UID))
+                    if (m_LinkingParentNode.m_Children.Contains(node.name))
                     {
                         if (GUILayout.Button("Remove Link"))
                         {
                             Undo.RecordObject(m_SelectedDialogue, "Removed Dialogue Link");
-                            m_LinkingParentNode.m_Children.Remove(node.m_UID);
+                            m_LinkingParentNode.m_Children.Remove(node.name);
                         }          
                     }
                     else
@@ -275,10 +277,9 @@ namespace RPG.Dialogue.Editor
                         if (GUILayout.Button("Add Link"))
                         {
                             Undo.RecordObject(m_SelectedDialogue, "Added Dialogue Link");
-                            m_LinkingParentNode.m_Children.Add(node.m_UID);
+                            m_LinkingParentNode.m_Children.Add(node.name);
                         }          
                     }
-     
                 }
             }
 
