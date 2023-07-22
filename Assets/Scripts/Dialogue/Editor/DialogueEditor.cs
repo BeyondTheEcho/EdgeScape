@@ -9,7 +9,7 @@ namespace RPG.Dialogue.Editor
 {
     public class DialogueEditor : EditorWindow
     {
-        private Dialogue m_SelectedDialogue = null;
+        //Non Serialized Vars
         [NonSerialized] private GUIStyle m_NodeStyle;
         [NonSerialized] private DialogueNode m_DraggingNode = null;
         [NonSerialized] private Vector2 m_DragOffset = Vector2.zero;
@@ -18,11 +18,18 @@ namespace RPG.Dialogue.Editor
         [NonSerialized] private DialogueNode m_LinkingParentNode = null;
         [NonSerialized] private bool m_DraggingCanvas = false;
         [NonSerialized] private Vector2 m_DraggingCanvasOffset;
-        private Vector2 m_ScrollPosition = Vector2.zero;
 
+        //Private Vars
+        private Vector2 m_ScrollPosition = Vector2.zero;
+        private Dialogue m_SelectedDialogue = null;
+
+        //Constants
         const float c_CanvasSize = 4000f;
         const float c_BackgroundSize = 50f;
 
+        //------------------------------------------------------------
+        //            Unity GUI / Event Functions
+        //------------------------------------------------------------
 
         [MenuItem("Window/Dialogue Editor")]
         public static void ShowEditorWindow()
@@ -110,59 +117,87 @@ namespace RPG.Dialogue.Editor
             }
         }
 
+        //------------------------------------------------------------
+        //               Handle Events Switch Functions
+        //------------------------------------------------------------
+        
+        private void ResetDraggingCanvas()
+        {
+            m_DraggingCanvas = false;
+        }
+        
+        private void ResetDraggingNode()
+        {
+            m_DraggingNode = null;
+        }
+        
+        private void ClickDragScrollCanvas()
+        {
+            m_ScrollPosition = m_DraggingCanvasOffset - Event.current.mousePosition;
+            Repaint();
+        }
+        
+        private void MoveDraggingNode()
+        {
+            Undo.RecordObject(m_SelectedDialogue, "Move Dialogue Node");
+            m_DraggingNode.m_NodePosition.position = Event.current.mousePosition + m_DragOffset;
+            Repaint();
+        }
+        
+        private void CheckSetDragState()
+        {
+            m_DraggingNode = GetNodeAtPoint(Event.current.mousePosition + m_ScrollPosition);
+            if (m_DraggingNode != null)
+            {
+                m_DragOffset = m_DraggingNode.m_NodePosition.position - Event.current.mousePosition;
+            }
+            else
+            {
+                m_DraggingCanvas = true;
+                m_DraggingCanvasOffset = Event.current.mousePosition + m_ScrollPosition;
+            }
+        }
+
+        //------------------------------------------------------------
+        //               Private Functions
+        //------------------------------------------------------------
+
+        private void HandleEvents()
+        {
+            switch (Event.current.type)
+            {
+                case EventType.MouseDown when m_DraggingNode == null:
+                    CheckSetDragState();
+                    break;
+                case EventType.MouseDrag when m_DraggingNode != null:
+                    MoveDraggingNode();
+                    break;
+                case EventType.MouseDrag when m_DraggingCanvas:
+                    ClickDragScrollCanvas();
+                    break;
+                case EventType.MouseUp when m_DraggingNode != null:
+                    ResetDraggingNode();
+                    break;
+                case EventType.MouseUp when m_DraggingCanvas:
+                    ResetDraggingCanvas();
+                    break;
+            }
+        }
+
         private void DrawConnections(DialogueNode node)
         {
             Vector3 startPosition = new Vector3(node.m_NodePosition.xMax, node.m_NodePosition.center.y);
 
             foreach (DialogueNode childNode in m_SelectedDialogue.GetAllChildren(node))
             {
-                Vector3 endPosition =  new Vector3(childNode.m_NodePosition.xMin, childNode.m_NodePosition.center.y);
+                Vector3 endPosition = new Vector3(childNode.m_NodePosition.xMin, childNode.m_NodePosition.center.y);
 
                 Vector3 controlPointOffset = endPosition - startPosition;
                 controlPointOffset.y = 0;
 
-                Handles.DrawBezier(startPosition, endPosition, 
-                startPosition + controlPointOffset, endPosition - controlPointOffset, 
+                Handles.DrawBezier(startPosition, endPosition,
+                startPosition + controlPointOffset, endPosition - controlPointOffset,
                 Color.white, null, 3f);
-            }
-        }
-
-        private void HandleEvents()
-        {
-            if (Event.current.type == EventType.MouseDown && m_DraggingNode == null)
-            {
-                m_DraggingNode = GetNodeAtPoint(Event.current.mousePosition + m_ScrollPosition);
-
-                if (m_DraggingNode != null)
-                {
-                    m_DragOffset = m_DraggingNode.m_NodePosition.position - Event.current.mousePosition;
-                }
-                else
-                {
-                    m_DraggingCanvas = true;
-                    m_DraggingCanvasOffset = Event.current.mousePosition + m_ScrollPosition;
-                }
-            }
-            else if (Event.current.type == EventType.MouseDrag && m_DraggingNode != null)
-            {
-                Undo.RecordObject(m_SelectedDialogue, "Move Dialogue Node");
-                m_DraggingNode.m_NodePosition.position = Event.current.mousePosition + m_DragOffset;
-              
-                Repaint();
-            }
-            else if (Event.current.type == EventType.MouseDrag && m_DraggingCanvas)
-            {
-                m_ScrollPosition = m_DraggingCanvasOffset - Event.current.mousePosition;
-
-                Repaint();
-            }
-            else if (Event.current.type == EventType.MouseUp && m_DraggingNode != null)
-            {
-                m_DraggingNode = null;
-            }
-            else if (Event.current.type == EventType.MouseUp && m_DraggingCanvas)
-            {
-                m_DraggingCanvas = false;
             }
         }
 
