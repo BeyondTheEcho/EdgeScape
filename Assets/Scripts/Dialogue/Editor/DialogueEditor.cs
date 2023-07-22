@@ -16,6 +16,8 @@ namespace RPG.Dialogue.Editor
         [NonSerialized] private DialogueNode m_CreatingNode = null;
         [NonSerialized] private DialogueNode m_DeletingNode = null;
         [NonSerialized] private DialogueNode m_LinkingParentNode = null;
+        [NonSerialized] private bool m_DraggingCanvas = false;
+        [NonSerialized] private Vector2 m_DraggingCanvasOffset;
         private Vector2 m_ScrollPosition = Vector2.zero;
 
 
@@ -126,16 +128,32 @@ namespace RPG.Dialogue.Editor
                 {
                     m_DragOffset = m_DraggingNode.m_NodePosition.position - Event.current.mousePosition;
                 }
+                else
+                {
+                    m_DraggingCanvas = true;
+                    m_DraggingCanvasOffset = Event.current.mousePosition + m_ScrollPosition;
+                }
             }
             else if (Event.current.type == EventType.MouseDrag && m_DraggingNode != null)
             {
                 Undo.RecordObject(m_SelectedDialogue, "Move Dialogue Node");
                 m_DraggingNode.m_NodePosition.position = Event.current.mousePosition + m_DragOffset;
+              
+                Repaint();
+            }
+            else if (Event.current.type == EventType.MouseDrag && m_DraggingCanvas)
+            {
+                m_ScrollPosition = m_DraggingCanvasOffset - Event.current.mousePosition;
+
                 Repaint();
             }
             else if (Event.current.type == EventType.MouseUp && m_DraggingNode != null)
             {
                 m_DraggingNode = null;
+            }
+            else if (Event.current.type == EventType.MouseUp && m_DraggingCanvas)
+            {
+                m_DraggingCanvas = false;
             }
         }
 
