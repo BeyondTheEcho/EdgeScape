@@ -45,6 +45,7 @@ namespace RPG.Dialogue.Editor
             if (dialogue != null) 
             {
                 ShowEditorWindow();
+                return true;
             }
 
             return false;
@@ -103,14 +104,12 @@ namespace RPG.Dialogue.Editor
 
                 if (m_CreatingNode != null)
                 {
-                    Undo.RecordObject(m_SelectedDialogue, "Added Dialogue Node");
                     m_SelectedDialogue.CreateNode(m_CreatingNode);
                     m_CreatingNode = null;
                 }
 
                 if (m_DeletingNode != null)
                 {
-                     Undo.RecordObject(m_SelectedDialogue, "Removed Dialogue Node");
                     m_SelectedDialogue.DeleteNode(m_DeletingNode);
                     m_DeletingNode = null;
                 }
@@ -139,8 +138,7 @@ namespace RPG.Dialogue.Editor
         
         private void MoveDraggingNode()
         {
-            Undo.RecordObject(m_SelectedDialogue, "Move Dialogue Node");
-            m_DraggingNode.m_NodePosition.position = Event.current.mousePosition + m_DragOffset;
+            m_DraggingNode.SetNodePosition(Event.current.mousePosition + m_DragOffset);
             Repaint();
         }
         
@@ -149,7 +147,7 @@ namespace RPG.Dialogue.Editor
             m_DraggingNode = GetNodeAtPoint(Event.current.mousePosition + m_ScrollPosition);
             if (m_DraggingNode != null)
             {
-                m_DragOffset = m_DraggingNode.m_NodePosition.position - Event.current.mousePosition;
+                m_DragOffset = m_DraggingNode.GetNodeRect().position - Event.current.mousePosition;
                 Selection.activeObject = m_DraggingNode;
             }
             else
@@ -188,11 +186,11 @@ namespace RPG.Dialogue.Editor
 
         private void DrawConnections(DialogueNode node)
         {
-            Vector3 startPosition = new Vector3(node.m_NodePosition.xMax, node.m_NodePosition.center.y);
+            Vector3 startPosition = new Vector3(node.GetNodeRect().xMax, node.GetNodeRect().center.y);
 
             foreach (DialogueNode childNode in m_SelectedDialogue.GetAllChildren(node))
             {
-                Vector3 endPosition = new Vector3(childNode.m_NodePosition.xMin, childNode.m_NodePosition.center.y);
+                Vector3 endPosition = new Vector3(childNode.GetNodeRect().xMin, childNode.GetNodeRect().center.y);
 
                 Vector3 controlPointOffset = endPosition - startPosition;
                 controlPointOffset.y = 0;
@@ -209,7 +207,7 @@ namespace RPG.Dialogue.Editor
 
             foreach (DialogueNode node in m_SelectedDialogue.GetDialogueNodes())
             {
-                if (node.m_NodePosition.Contains(mousePosition))
+                if (node.GetNodeRect().Contains(mousePosition))
                 {
                     dialogueNode = node;
                 }
@@ -220,17 +218,9 @@ namespace RPG.Dialogue.Editor
 
         private void DrawNode(DialogueNode node)
         {
-            GUILayout.BeginArea(node.m_NodePosition, m_NodeStyle);
+            GUILayout.BeginArea(node.GetNodeRect(), m_NodeStyle);
 
-            EditorGUI.BeginChangeCheck();
-
-            string contentText = EditorGUILayout.TextField(node.m_Content);
-
-            if (EditorGUI.EndChangeCheck())
-            {
-                Undo.RecordObject(m_SelectedDialogue, "Update Dialogue Text");
-                node.m_Content = contentText;
-            }
+            node.SetContent(EditorGUILayout.TextField(node.GetContent()));
 
             GUILayout.BeginHorizontal();
 
@@ -264,20 +254,18 @@ namespace RPG.Dialogue.Editor
                 }
                 else
                 {
-                    if (m_LinkingParentNode.m_Children.Contains(node.name))
+                    if (m_LinkingParentNode.GetChildren().Contains(node.name))
                     {
                         if (GUILayout.Button("Remove Link"))
                         {
-                            Undo.RecordObject(m_SelectedDialogue, "Removed Dialogue Link");
-                            m_LinkingParentNode.m_Children.Remove(node.name);
+                            m_LinkingParentNode.RemoveChild(node.name);
                         }          
                     }
                     else
                     {
                         if (GUILayout.Button("Add Link"))
                         {
-                            Undo.RecordObject(m_SelectedDialogue, "Added Dialogue Link");
-                            m_LinkingParentNode.m_Children.Add(node.name);
+                            m_LinkingParentNode.AddChild(node.name);
                         }          
                     }
                 }
